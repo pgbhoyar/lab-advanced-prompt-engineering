@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post-Workshop Next Steps · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Post-Workshop Next Steps
+    </nav>
+    <section class="lab-section">
+<h1 id="post-workshop-next-steps">Post-Workshop Next Steps</h1>
+<p>The temporary workshop keys will be rotated or revoked, but everything in this repository stays
+usable — you only need model access to make live calls.</p>
+<h2 id="finish-what-you-started">Finish what you started</h2>
+<ul>
+<li>Complete the <strong>capstone</strong> (<a href="../labs/08-capstone/README.html">labs/08-capstone</a>) using the
+  reference prompt, capstone test set, and <a href="../rubrics/capstone-rubric.html">capstone rubric</a>.</li>
+<li>Try the labs you skipped live: <strong>05 chaining</strong>, <strong>06 grounding</strong>, <strong>07 evaluation &amp; injection</strong>.</li>
+</ul>
+<h2 id="reuse-the-pattern-in-your-own-work">Reuse the pattern in your own work</h2>
+<ul>
+<li>Treat prompts as versioned assets: manifest + system/user text + test set + rubric + change notes.</li>
+<li>Keep prompt content separate from application code (see the thin runners in <code>apps/</code>).</li>
+<li>Validate structured output programmatically; keep a small five-category test set.</li>
+</ul>
+<h2 id="take-it-to-production-beyond-this-workshop">Take it to production (beyond this workshop)</h2>
+<ul>
+<li>Replace API keys with <strong>Microsoft Entra ID</strong> (managed identity), least privilege, and managed
+  secret storage.</li>
+<li>Add application-level safeguards on top of prompt design: input validation, output validation,
+  human confirmation for consequential actions, and content-safety / prompt-protection tooling.</li>
+<li>Add evaluation to CI: deterministic checks on every change, plus periodic human/AI-assisted
+  review.</li>
+</ul>
+<h2 id="where-to-look">Where to look</h2>
+<ul>
+<li>Techniques and rules: <a href="../.specify/memory/constitution.html">.specify/memory/constitution.md</a></li>
+<li>Shared assets: <code>prompts/</code>, <code>datasets/</code>, <code>schemas/</code>, <code>rubrics/</code></li>
+<li>Evaluation tooling: <code>evaluation/facilitator/</code></li>
+</ul>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

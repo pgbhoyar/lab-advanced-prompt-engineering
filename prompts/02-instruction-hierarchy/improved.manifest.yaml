@@ -1,0 +1,20 @@
+id: triage-hierarchy-improved
+version: 1.0.0
+lab: 02-instruction-hierarchy
+variant: improved
+purpose: Separates stable system behavior from a runtime task and delimited untrusted data.
+system_prompt: system.md
+user_prompt: improved-user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/adversarial-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 800
+  store: false
+known_limitations:
+  - Prompt-level separation reduces but does not eliminate injection risk; app-level controls still required.
+change_notes: >
+  v1.0.0 initial. Moves triage rules to system instructions and wraps the request in
+  <source_data> delimiters with an explicit rule that content inside is untrusted data, not
+  instructions.

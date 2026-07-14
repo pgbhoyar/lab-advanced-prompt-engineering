@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CLI Contract · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../../index.html">Home</a> / CLI Contract
+    </nav>
+    <section class="lab-section">
+<h1 id="cli-contract">CLI Contract</h1>
+<p><strong>Feature</strong>: <code>001-advanced-prompt-workshop</code> | <strong>Applies to</strong>: Python, C#, and Java runners</p>
+<p>All three coding-track runners MUST expose the same command surface, argument names, exit codes, and console-output semantics. Language-specific differences are limited to the invocation prefix (e.g. <code>python -m workshop_runner</code>, <code>dotnet run --</code>, <code>java -jar workshop-runner.jar</code> or <code>./mvnw -q exec:java</code>).</p>
+<h2 id="commands">Commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>check-config</code></td>
+<td>Validate environment configuration without contacting the model.</td>
+</tr>
+<tr>
+<td><code>list-labs</code></td>
+<td>List available lab identifiers.</td>
+</tr>
+<tr>
+<td><code>list-cases --lab &lt;lab-id&gt;</code></td>
+<td>List test-case identifiers for a lab.</td>
+</tr>
+<tr>
+<td><code>run --lab &lt;lab-id&gt; --case &lt;case-id&gt; --variant &lt;variant&gt;</code></td>
+<td>Render the prompt for the case, submit one request, display the response, and validate structured output when applicable.</td>
+</tr>
+<tr>
+<td><code>validate --file &lt;result-file&gt;</code></td>
+<td>Validate a saved result file (or piped JSON) against the applicable schema without contacting the model.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="arguments">Arguments</h2>
+<ul>
+<li><code>--lab &lt;lab-id&gt;</code>: Lab identifier matching a directory under <code>labs/</code> (e.g. <code>04-structured-output</code>). Required for <code>run</code>, <code>list-cases</code>.</li>
+<li><code>--case &lt;case-id&gt;</code>: Test-case identifier from the lab's test set. Required for <code>run</code>.</li>
+<li><code>--variant &lt;variant&gt;</code>: One of <code>baseline</code>, <code>improved</code>, <code>stage</code>, <code>reference</code>. Required for <code>run</code>. Defaults are not assumed.</li>
+<li><code>--file &lt;path&gt;</code>: Path to a result JSON file for <code>validate</code>. When omitted, read JSON from standard input.</li>
+<li><code>--save</code> (optional flag): Persist a sanitized result to the results directory (equivalent to <code>WORKSHOP_SAVE_RESULTS=true</code> for this invocation).</li>
+</ul>
+<h2 id="exit-codes">Exit Codes</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Success. For <code>run</code>, a response was received and (if applicable) passed structured-output validation.</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Usage error (unknown command, missing/invalid argument).</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Configuration error (missing/invalid env var, non-HTTPS base URL, base URL not ending in <code>/openai/v1/</code>, blank deployment, placeholder API key, invalid numeric setting).</td>
+</tr>
+<tr>
+<td><code>3</code></td>
+<td>Model/request error after retries (authentication failure, invalid request, content-filter rejection, invalid deployment, timeout, transient failures exhausted).</td>
+</tr>
+<tr>
+<td><code>4</code></td>
+<td>Validation failure (response received but structured output failed schema/contract validation, or <code>validate</code> found errors).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="console-output-expectations">Console-Output Expectations</h2>
+<ul>
+<li><code>run</code> prints, in order: resolved lab/case/variant identifiers, the rendered prompt sections (system, user, delimited input) when a <code>--show-prompt</code> style verbosity is enabled by default for teaching, the model response, and a validation summary line.</li>
+<li>Validation summary uses a stable prefix: <code>VALIDATION: PASS</code> or <code>VALIDATION: FAIL</code> followed by an error list.</li>
+<li>Errors are written to standard error; primary output to standard output.</li>
+<li>No credential value is ever printed. Known secret patterns are redacted in all output.</li>
+<li>Output is capped to the amount required by the lab.</li>
+</ul>
+<h2 id="error-semantics">Error Semantics</h2>
+<ul>
+<li>Configuration problems fail before any request is sent, with a message explaining how to fix the problem (without printing the credential).</li>
+<li>Retryable failures (HTTP 429/408/500/502/503/504, transient network) are retried up to three attempts total: attempt 1 immediate, attempt 2 exponential delay with jitter, attempt 3 larger exponential delay with jitter; service-provided retry headers are respected.</li>
+<li>Non-retryable failures (authentication, invalid request, content-filter, invalid deployment, schema-definition errors) are reported immediately without retry.</li>
+</ul>
+<h2 id="parity-requirement">Parity Requirement</h2>
+<p>Cross-track parity tests assert that all three runners: load the same prompt files, datasets, and schema; accept equivalent arguments; produce equivalent pass/fail validation semantics; and use identical exit codes for equivalent conditions. No language project may contain a divergent copy of a shared prompt.</p>
+    </section>
+  </main>
+  <script src="../../../assets/site.js"></script>
+</body>
+</html>

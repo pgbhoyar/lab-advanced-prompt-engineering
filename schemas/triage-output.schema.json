@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://workshop.local/schemas/triage-output.schema.json",
+  "title": "Enterprise Service Request Triage Output",
+  "description": "Strict structured response produced by triage prompts. Machine-consumed; no text may appear outside this object.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "request_id",
+    "summary",
+    "category",
+    "urgency",
+    "recommended_action",
+    "missing_information",
+    "evidence",
+    "confidence",
+    "needs_human_review"
+  ],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Echoes the request identifier supplied in the input. MUST NOT be invented; use the exact supplied value.",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "summary": {
+      "type": "string",
+      "description": "Concise description of the issue grounded in the supplied request.",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "category": {
+      "type": "string",
+      "description": "Primary request category.",
+      "enum": ["access", "hardware", "software", "network", "security", "other"]
+    },
+    "urgency": {
+      "type": "string",
+      "description": "Assessed urgency.",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "recommended_action": {
+      "type": "string",
+      "description": "Specific next action. MUST NOT claim an action was already performed.",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "missing_information": {
+      "type": "array",
+      "description": "Items of missing information. Empty array when nothing is missing.",
+      "items": { "type": "string", "minLength": 1, "maxLength": 200 },
+      "maxItems": 20
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Evidence taken only from the supplied request or policy. Empty array when no supporting evidence exists.",
+      "items": { "type": "string", "minLength": 1, "maxLength": 300 },
+      "maxItems": 20
+    },
+    "confidence": {
+      "type": "string",
+      "description": "Model-reported confidence in the triage decision.",
+      "enum": ["low", "medium", "high"]
+    },
+    "needs_human_review": {
+      "type": "boolean",
+      "description": "MUST be true when critical information is missing, sources conflict, policy support is insufficient, the request suggests a security incident, or the category cannot be reliably determined."
+    }
+  }
+}

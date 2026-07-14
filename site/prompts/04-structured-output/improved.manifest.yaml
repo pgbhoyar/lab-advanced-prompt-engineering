@@ -1,0 +1,21 @@
+id: triage-structured-improved
+version: 1.0.0
+lab: 04-structured-output
+variant: improved
+purpose: Strict structured triage output enforced by the shared JSON schema.
+system_prompt: strict-system.md
+user_prompt: user.md
+variables:
+  - request_id
+  - request_text
+output_schema: ../../schemas/triage-output.schema.json
+test_set: ../../datasets/triage/core-test-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 700
+  store: false
+known_limitations:
+  - Category decisions may need human review when evidence conflicts.
+change_notes: >
+  v1.0.0 initial. Replaces loose "JSON" request with a strict json_schema output contract
+  (all fields required, enums constrained, additionalProperties false) validated by all tracks.

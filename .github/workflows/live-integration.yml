@@ -1,0 +1,41 @@
+name: Live Integration (manual)
+
+# Opt-in only. Never runs automatically on pull requests.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"  # optional weekly pre-workshop validation
+
+concurrency:
+  group: live-integration
+  cancel-in-progress: false
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    environment: workshop-live   # protected environment; maintainers only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install --quiet pyyaml jsonschema
+          python -m pip install -e apps/python
+      - name: Guard on expected deployment
+        env:
+          AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
+          EXPECTED_DEPLOYMENT: ${{ vars.EXPECTED_DEPLOYMENT }}
+        run: |
+          if [ -n "$EXPECTED_DEPLOYMENT" ] && [ "$AZURE_OPENAI_DEPLOYMENT" != "$EXPECTED_DEPLOYMENT" ]; then
+            echo "Configured deployment does not match the expected workshop deployment."; exit 1; fi
+      - name: Minimal live smoke test
+        env:
+          AZURE_OPENAI_BASE_URL: ${{ secrets.AZURE_OPENAI_BASE_URL }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
+          WORKSHOP_MAX_OUTPUT_TOKENS: "200"
+        run: |
+          python -m workshop_runner check-config
+          python -m workshop_runner run --lab 00-access-and-baseline --case starter-01 --variant baseline --quiet

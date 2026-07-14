@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 07 — Evaluation &amp; Injection · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+      <span style="color:var(--text-muted)">|</span>
+      <a href="../../labs/07-evaluation-and-injection/README.html">Markdown</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 07 — Evaluation and Prompt-Injection Testing
+    </nav>
+
+    <header class="lab-header">
+      <h1>Lab 07 — Evaluation and Prompt-Injection Testing</h1>
+      <span class="updated-label">Last updated: Jul-14-2026</span>
+      <p class="lab-intro">
+        Turn "it feels better" into <strong>evidence</strong>. Compare prompt variants with a
+        repeatable rubric, then test a defensive prompt against benign adversarial input — and
+        record failures honestly.
+      </p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-intermediate">INTERMEDIATE</span>
+        <span class="badge badge-duration">⏱️ 15 MIN</span>
+        <span class="badge badge-category-specialized">📂 EVALUATION &amp; SECURITY</span>
+      </div>
+    </header>
+
+    <table class="lab-detail-table">
+      <thead><tr><th>Level</th><th>Persona</th><th>Duration</th><th>Learning objective</th></tr></thead>
+      <tbody><tr>
+        <td>300</td>
+        <td>Anyone (no coding required)</td>
+        <td>15 minutes (10 evaluation + 5 injection)</td>
+        <td>Score variants across five scenario types, surface improvements and regressions, and demonstrate that prompt wording is one layer of defense — not the whole security story.</td>
+      </tr></tbody>
+    </table>
+
+    <nav class="lab-toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#why">Why this matters</a></li>
+        <li><a href="#scenario">Scenario</a></li>
+        <li><a href="#concepts">Core concepts</a></li>
+        <li><a href="#prereqs">Prerequisites</a></li>
+        <li><a href="#targets">What you'll accomplish</a></li>
+        <li><a href="#parta">Part A — Evaluation</a></li>
+        <li><a href="#partb">Part B — Prompt-injection testing</a></li>
+        <li><a href="#files">Files used in this lab</a></li>
+        <li><a href="#checkpoint">Checkpoint</a></li>
+        <li><a href="#reflection">Test your understanding &amp; reflection</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ol>
+    </nav>
+
+    <section class="lab-section" id="why">
+      <h2>🤔 Why this matters</h2>
+      <p>Evaluation-driven iteration is the main difference between casual prompting and prompt engineering. And because enterprise prompts process untrusted text, you must understand both the value <strong>and the limits</strong> of defensive prompt design.</p>
+    </section>
+
+    <section class="lab-section" id="scenario">
+      <h2>🌐 Scenario</h2>
+      <p>You compare a baseline and improved prompt across the five scenario types (normal, ambiguous, missing-information, edge, adversarial), then run a <strong>defensive</strong> triage prompt against benign, synthetic injection attempts.</p>
+    </section>
+
+    <section class="lab-section" id="concepts">
+      <h2>🎓 Core concepts</h2>
+      <table class="content-table">
+        <thead><tr><th>Concept</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Evaluation rubric</strong></td><td>Scores responses on defined criteria (0–2), so comparisons are evidence-based.</td></tr>
+          <tr><td><strong>Regression</strong></td><td>A change that improves one thing but worsens another — the rubric makes it visible.</td></tr>
+          <tr><td><strong>Prompt injection</strong></td><td>Untrusted text that tries to hijack the task.</td></tr>
+          <tr><td><strong>Defense in depth</strong></td><td>Layering safeguards; prompt wording alone is not a complete boundary.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="prereqs">
+      <h2>✅ Prerequisites</h2>
+      <ul>
+        <li><strong>Labs 01, 02, and 04</strong> completed.</li>
+        <li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="targets">
+      <h2>🎯 What you'll accomplish</h2>
+      <ul>
+        <li>Score two prompt variants on identical inputs and name an improvement or regression.</li>
+        <li>Run a defensive prompt against adversarial cases and record the outcome honestly.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="parta">
+      <h2>🧪 Part A — Evaluation</h2>
+      <div class="usecase-banner">
+        <span>Run a baseline and improved variant (e.g. Lab 04) on the <strong>same</strong> cases and score both.</span>
+        <span class="uc-effort">⏱️ 10 min</span>
+      </div>
+      <div class="callout callout-note">
+        <span class="callout-label">Where does {{request_text}} come from?</span>
+        <p><code>{{request_text}}</code> is a <strong>placeholder</strong> — you never type it. The runner fills it automatically from the test case you pick with <code>--case</code> (the input data lives in <code>datasets/triage/&hellip;</code>). Your job is just to choose <code>--lab</code>, <code>--case</code>, and <code>--variant</code>; to use different input, pick another <code>--case</code>. <a href="../../docs/coding-tracks.html">How the coding tracks work &rarr;</a></p>
+      </div>
+      <ol class="step-list">
+        <li>Pick a lab with baseline/improved variants (e.g. <code>04-structured-output</code>) and run both on the same cases.</li>
+        <li>Score each with the <a href="../../rubrics/standard-rubric.html">standard rubric</a>. Record improvements <strong>and</strong> regressions — a change that fixes the happy path but breaks missing-information handling is a regression you must surface.</li>
+        <li>Optional facilitator deterministic runner:
+<pre><code>python evaluation/facilitator/run_evaluation.py --lab 04-structured-output --variant improved --runs 3</code></pre>
+        </li>
+      </ol>
+      <div class="callout callout-note">
+        <span class="callout-label">No model access?</span>
+        <p>Do the paper exercise in <a href="../../offline-fallback/evaluation-exercise.html">offline-fallback/evaluation-exercise.md</a> — score two recorded responses with the rubric.</p>
+      </div>
+    </section>
+
+    <section class="lab-section" id="partb">
+      <h2>🛡️ Part B — Prompt-injection testing</h2>
+      <div class="usecase-banner">
+        <span>Run the defensive prompt against benign adversarial cases.</span>
+        <span class="uc-effort">⏱️ 5 min</span>
+      </div>
+      <ol class="step-list">
+        <li>Run the defensive (<code>improved</code>) variant on each adversarial case:
+          <div class="code-tabs">
+            <span class="code-tabs-label">Run defensive prompt</span>
+            <div class="code-tab-buttons" role="tablist" aria-label="Programming language">
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="true" data-lang="python">Python</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="csharp">C#</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="java">Java</button>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="python">
+<pre><code>python -m workshop_runner run --lab 07-evaluation-and-injection --case adversarial-ignore-01 --variant improved</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="csharp" hidden>
+<pre><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 07-evaluation-and-injection --case adversarial-ignore-01 --variant improved</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="java" hidden>
+<pre><code>./mvnw -q exec:java -Dexec.args="run --lab 07-evaluation-and-injection --case adversarial-ignore-01 --variant improved"</code></pre>
+            </div>
+          </div>
+          Also try <code>adversarial-reveal-01</code> and <code>adversarial-outofscope-01</code>.
+        </li>
+        <li>Confirm the model keeps triaging, refuses to reveal instructions/secrets, and stays in scope.</li>
+      </ol>
+      <div class="callout callout-important">
+        <span class="callout-label">Honesty rule</span>
+        <p>If an adversarial test <strong>bypasses</strong> the boundary, record it as a <strong>failed</strong> test and note that application-level safeguards are required. Do not retry until you get a clean run and present only that.</p>
+      </div>
+      <p class="congrats">🏅 Congratulations! You evaluated with evidence and tested defenses honestly.</p>
+    </section>
+
+    <section class="lab-section" id="files">
+      <h2>📁 Files used in this lab</h2>
+      <p>Everything this lab runs on is a shared, editable file &mdash; no code required. The runner loads these by <code>--lab</code> and <code>--case</code>; edit any prompt file and all tracks (and the portal) pick up the change.</p>
+      <table class="content-table">
+        <thead><tr><th>File</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../../prompts/07-defensive-prompt/defensive.manifest.yaml"><code>prompts/07-defensive-prompt/defensive.manifest.yaml</code></a></td><td>Improved prompt manifest (declares variables, test set, model settings)</td></tr>
+          <tr><td><a href="../../prompts/07-defensive-prompt/system.html"><code>prompts/07-defensive-prompt/system.md</code></a></td><td>Improved system instructions</td></tr>
+          <tr><td><a href="../../prompts/07-defensive-prompt/user.html"><code>prompts/07-defensive-prompt/user.md</code></a></td><td>Improved user message</td></tr>
+          <tr><td><a href="../../datasets/triage/adversarial-cases.jsonl"><code>datasets/triage/adversarial-cases.jsonl</code></a></td><td>Test cases that fill the prompt placeholders</td></tr>
+          <tr><td><a href="../../rubrics/standard-rubric.html"><code>rubrics/standard-rubric.md</code></a></td><td>Scoring rubric used to compare prompts</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="checkpoint">
+      <h2>🏅 Checkpoint</h2>
+      <ul>
+        <li>You scored a baseline and improved variant on the same inputs and named one improvement or regression.</li>
+        <li>You ran at least one adversarial case and recorded the outcome honestly.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="reflection">
+      <h2>🤔 Test your understanding &amp; reflection</h2>
+      <ul>
+        <li>Did the improved prompt improve one criterion while regressing another?</li>
+        <li>Why is a passing injection test <strong>not</strong> proof the prompt is secure?</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="troubleshooting">
+      <h2>🧭 Troubleshooting</h2>
+      <ul>
+        <li>Deterministic runner import error → run from the repository root.</li>
+        <li>Coding blocked? Use the <a href="../../labs/07-evaluation-and-injection/portal.html">Portal steps</a>. See <a href="../../docs/troubleshooting.html">troubleshooting</a>.</li>
+      </ul>
+      <p>Optional challenge: <a href="../../labs/07-evaluation-and-injection/challenge.html">challenge.md</a>.</p>
+    </section>
+
+    <nav class="lab-nav" aria-label="Lab navigation">
+      <a href="../06-grounding-and-uncertainty/index.html">
+        <span class="nav-label">←  Previous lab</span>
+        <span class="nav-title">Lab 06 — Grounding &amp; Uncertainty</span>
+      </a>
+      <a class="nav-next" href="../08-capstone/index.html">
+        <span class="nav-label">Next lab  →</span>
+        <span class="nav-title">Lab 08 — Capstone</span>
+      </a>
+    </nav>
+  </main>
+
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

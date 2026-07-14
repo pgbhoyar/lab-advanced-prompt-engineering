@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding Tracks — Starter Instructions · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Coding Tracks — Starter Instructions
+    </nav>
+    <section class="lab-section">
+<h1 id="coding-tracks-starter-instructions">Coding Tracks — Starter Instructions</h1>
+<p>All three coding tracks are <strong>thin CLI runners</strong> that load the same shared prompts, datasets, and
+schemas from the repository root. Only how they connect to the model differs. Prompt content lives
+in <code>prompts/</code> — never inside a language project.</p>
+<p>Every runner exposes the same commands (see
+<a href="../specs/001-advanced-prompt-workshop/contracts/cli-contract.html">contracts/cli-contract.md</a>):
+<code>check-config</code>, <code>list-labs</code>, <code>list-cases --lab &lt;id&gt;</code>, <code>run --lab &lt;id&gt; --case &lt;id&gt; --variant &lt;v&gt;</code>,
+<code>validate [--file &lt;f&gt;]</code>. Exit codes: <code>0</code> ok, <code>1</code> usage, <code>2</code> config, <code>3</code> model, <code>4</code> validation.</p>
+<p>Configure credentials via environment variables only (see <a href="credential-safety.html">credential-safety.md</a>).</p>
+<h2 id="how-a-run-works-where-request_text-comes-from">How a run works (where <code>{{request_text}}</code> comes from)</h2>
+<p>You will see placeholders like <code>{{request_text}}</code> in the prompt files. <strong>You never type these.</strong>
+The runner fills them in automatically. Every <code>run</code> does the same four things:</p>
+<ol>
+<li><strong>Loads the prompt</strong> for the lab + variant, e.g. <code>prompts/01-explicit-contract/user.md</code>, which
+   contains the placeholder <code>{{request_text}}</code>.</li>
+<li><strong>Loads the test case</strong> you chose with <code>--case</code>. Cases live in <code>datasets/triage/*.jsonl</code>. For
+   <code>--case normal-01</code>, the input <code>request_text</code> is <em>"My work laptop is about 5 years old…"</em>.</li>
+<li><strong>Renders</strong> the prompt by substituting each <code>{{placeholder}}</code> with the matching value from the
+   case's <code>input</code> (so <code>{{request_text}}</code> becomes the case text). The runner prints the rendered
+   prompt so you can see exactly what was sent.</li>
+<li><strong>Sends</strong> the request and prints the response (and <code>VALIDATION: PASS/FAIL</code> for structured labs).</li>
+</ol>
+<p>So the whole job of the attendee is: <strong>pick a <code>--lab</code>, a <code>--case</code>, and a <code>--variant</code>.</strong> You do not
+paste input or fill in the placeholder. To use different input, choose a different <code>--case</code>:</p>
+<pre><code>python -m workshop_runner list-cases --lab 01-explicit-prompt-contract
+</code></pre>
+<p>To change the <em>wording</em> of the prompt, edit the file under <code>prompts/&lt;lab&gt;/</code> — no code change, and
+all three languages (and the portal) pick up the same edit.</p>
+<blockquote>
+<p><strong>Run from the repository root.</strong> The runner walks up the folder tree to find the shared
+<code>prompts/</code>, <code>datasets/</code>, and <code>schemas/</code> directories. If you see "No manifest for lab…", you are
+probably not at the repo root, or you passed a <code>--lab</code>/<code>--case</code> id that doesn't exist
+(use <code>list-labs</code> and <code>list-cases</code>).</p>
+</blockquote>
+<h2 id="python-310">Python (3.10+)</h2>
+<pre><code>python -m pip install -e apps/python
+python -m workshop_runner check-config
+python -m workshop_runner run --lab 01-explicit-prompt-contract --case normal-01 --variant improved
+python -m workshop_runner chain --lab 05-prompt-chaining --case edge-long-01
+</code></pre>
+<h2 id="c-net-8">C# (.NET 8+)</h2>
+<p><strong>Expectations:</strong> .NET 8 SDK installed; a <code>.env</code> (or environment variables) with your
+credentials; and you run <strong>from the repository root</strong> so the runner finds the shared assets. The
+first <code>dotnet run</code> automatically restores packages and builds — allow a little extra time.</p>
+<pre><code># from the repository root
+dotnet run --project apps/csharp/src/WorkshopRunner -- check-config
+dotnet run --project apps/csharp/src/WorkshopRunner -- list-cases --lab 01-explicit-prompt-contract
+dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 01-explicit-prompt-contract --case normal-01 --variant baseline
+dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 01-explicit-prompt-contract --case normal-01 --variant improved
+</code></pre>
+<p>The <code>--</code> separates <code>dotnet</code> options from the runner's arguments. You do <strong>not</strong> edit any C# code or
+supply <code>{{request_text}}</code> — the runner renders it from the <code>--case</code> you chose (see
+<a href="#how-a-run-works-where-request_text-comes-from">How a run works</a>). Run the offline tests with:</p>
+<pre><code>dotnet test apps/csharp/tests/WorkshopRunner.Tests --filter Category=Offline
+</code></pre>
+<h2 id="java-jdk-17">Java (JDK 17+)</h2>
+<p>Using the Maven Wrapper (recommended):</p>
+<pre><code>cd apps/java
+./mvnw -q compile
+./mvnw -q exec:java -Dexec.args=&quot;check-config&quot;
+./mvnw -q exec:java -Dexec.args=&quot;run --lab 04-structured-output --case normal-01 --variant improved&quot;
+./mvnw -q test -Dgroups=offline
+</code></pre>
+<p>Or with the JDK directly (no Maven needed — the runner core uses only <code>java.base</code>):</p>
+<pre><code>cd apps/java
+javac -d target/classes (all files under src/main/java)
+java -cp target/classes com.workshop.runner.Main list-labs
+</code></pre>
+<h2 id="editing-prompts">Editing prompts</h2>
+<p>Change a prompt by editing files under <code>prompts/&lt;lab&gt;/</code> — no code change is required. Re-run the
+same command to see the effect. All tracks pick up the same edit.</p>
+<h2 id="switching-to-the-portal">Switching to the portal</h2>
+<p>If a coding track breaks, switch to the portal at the same lab number using the same prompt and
+input — see <a href="pre-workshop-setup.html">pre-workshop-setup.md</a> §4.</p>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

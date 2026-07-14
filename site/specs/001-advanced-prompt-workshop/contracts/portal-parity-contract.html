@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Parity Contract · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../../index.html">Home</a> / Portal Parity Contract
+    </nav>
+    <section class="lab-section">
+<h1 id="portal-parity-contract">Portal Parity Contract</h1>
+<p><strong>Feature</strong>: <code>001-advanced-prompt-workshop</code></p>
+<p>This contract maps every automated coding action to the equivalent Microsoft Foundry portal action so that portal and coding tracks teach identical behavior (constitution Gate 1, Gate 10; FR-088 through FR-097). Both tracks use the same system instructions, user prompt, input data, output contract, test cases, rubric, and expected observations.</p>
+<h2 id="action-mapping">Action Mapping</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Coding-track action (CLI)</th>
+<th>Portal-track equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>check-config</code> validates env vars and base URL</td>
+<td>Attendee confirms they are in the correct Foundry project and have the target deployment selected</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Loader reads the shared system prompt (<code>system.md</code>)</td>
+<td>Attendee pastes the same system/developer instructions into the portal system-instruction field</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Loader renders the user prompt with case variables</td>
+<td>Attendee pastes the rendered user prompt into the user-input field</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Delimited source data injected into the prompt</td>
+<td>Attendee pastes source data inside the same delimiters shown in the lab</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Model client sets deployment, <code>reasoning_effort</code>, <code>max_output_tokens</code>, <code>store=false</code></td>
+<td>Attendee selects the same deployment and configures equivalent output settings; response storage left off</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Structured-output schema applied</td>
+<td>Attendee enables the portal structured-output/JSON-schema option using the shared schema, or requests the schema in-prompt where schema entry is unavailable</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Runner submits one request</td>
+<td>Attendee runs the prompt once</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Response validator checks JSON parse, required fields, enums, no extra fields, null/empty-list behavior</td>
+<td>Attendee applies the manual structured-output checklist (<code>rubrics/structured-output-checklist.md</code>)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Result recorder saves sanitized result (when enabled)</td>
+<td>Attendee copies the output into the lab worksheet</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Exit code / <code>VALIDATION: PASS</code>/<code>FAIL</code></td>
+<td>Checklist pass/fail outcome</td>
+</tr>
+</tbody>
+</table>
+<h2 id="equivalence-rules">Equivalence Rules</h2>
+<ul>
+<li>The same test-case inputs (<code>datasets/triage/*.jsonl</code>) are used in both tracks.</li>
+<li>The same rubric (<code>rubrics/standard-rubric.md</code>) scores both tracks.</li>
+<li>Portal instructions may describe manual steps; coding tracks automate loading and validation, but the observed behavior and pass/fail outcome MUST match.</li>
+<li>When a portal capability is unavailable (e.g. strict schema entry), the lab documents the smallest in-prompt fallback without changing the shared output contract.</li>
+</ul>
+<h2 id="fallback-continuity">Fallback Continuity</h2>
+<p>A blocked coding attendee resumes at the same lab number, with the same prompt and input data, on the portal track within five minutes (SC-002). No portal step requires locally installed software (FR-003, operational constraints).</p>
+    </section>
+  </main>
+  <script src="../../../assets/site.js"></script>
+</body>
+</html>

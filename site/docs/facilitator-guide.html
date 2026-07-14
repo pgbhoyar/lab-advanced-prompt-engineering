@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facilitator Guide · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Facilitator Guide
+    </nav>
+    <section class="lab-section">
+<h1 id="facilitator-guide">Facilitator Guide</h1>
+<p>End-to-end guide for delivering the 75-minute workshop. A facilitator who did not author the labs
+should be able to run the session from this document (SC-019).</p>
+<h2 id="before-the-session">Before the session</h2>
+<ul>
+<li>[ ] Provision the GPT-5.4 Foundry deployment; confirm quota (see <a href="timing-guide.html">timing-guide.md</a>
+      and research R-001/R-006).</li>
+<li>[ ] Prepare temporary keys and the controlled distribution channel
+      (<a href="credential-safety.html">credential-safety.md</a>).</li>
+<li>[ ] Rehearse end-to-end (one non-coder, one Python, one C#/Java, one non-author facilitator).</li>
+<li>[ ] Pre-run each improved prompt so you have live examples if the network is slow.</li>
+<li>[ ] Have the offline fallback pack ready (<code>offline-fallback/</code>).</li>
+</ul>
+<h2 id="required-vs-optional-labs">Required vs optional labs</h2>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Status in a 75-min session</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00 Access &amp; Baseline</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>01 Explicit Contract</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>02 Instruction Hierarchy</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>03 Few-Shot</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>04 Structured Output</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>05 Chaining</td>
+<td>Demo / take-home</td>
+</tr>
+<tr>
+<td>06 Grounding</td>
+<td>Demo / take-home</td>
+</tr>
+<tr>
+<td>07 Evaluation &amp; Injection</td>
+<td>Demo (short) + take-home</td>
+</tr>
+<tr>
+<td>08 Capstone</td>
+<td>Intro + take-home</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="timing-guide.html">timing-guide.md</a> for the minute-by-minute agenda and the accelerated/
+take-home paths.</p>
+<h2 id="per-segment-structure">Per-segment structure</h2>
+<p>For each lab: state the <strong>objective</strong>, show the <strong>baseline weakness</strong> (demo cue), introduce the
+<strong>one technique</strong>, run the <strong>improved</strong> prompt on the same input, and confirm the <strong>checkpoint</strong>
+before moving on. Expected observations are in each lab's <code>expected-observations.md</code>.</p>
+<h2 id="managing-different-speeds">Managing different speeds</h2>
+<ul>
+<li>Slower attendees: point to the reference prompt (<code>prompts/.../improved*</code>) and the portal
+  fallback so they can catch up without blocking.</li>
+<li>Faster attendees: the optional <code>challenge.md</code> in each lab.</li>
+<li>Whole-group code failure: switch everyone to the portal at the same lab number
+  (<a href="pre-workshop-setup.html">pre-workshop-setup.md</a> §4).</li>
+</ul>
+<h2 id="common-questions">Common questions</h2>
+<ul>
+<li><em>"My deployment name isn't GPT-5.4."</em> Correct — use the exact deployment name you were given.</li>
+<li><em>"Can I use my own data?"</em> No — synthetic only; never paste confidential/personal data.</li>
+<li><em>"The model gave a different answer than the example."</em> Expected. Judge by characteristics, not
+  exact text (AD-009).</li>
+<li><em>"Why did the injection sometimes work?"</em> Prompt wording is one layer; that is the Lab 07 lesson.</li>
+</ul>
+<h2 id="troubleshooting-recovery">Troubleshooting &amp; recovery</h2>
+<p>See <a href="troubleshooting.html">troubleshooting.md</a> for setup, authentication, dependency, rate-limit,
+schema, and output problems. If model access fails entirely, run the segment from the
+<code>offline-fallback/</code> pack and the pre-run examples.</p>
+<h2 id="contingency-quota-availability-network">Contingency (quota / availability / network)</h2>
+<ul>
+<li>Stagger exercises so not all attendees call at once; keep inputs/outputs short (low reasoning
+  effort, bounded tokens).</li>
+<li>Keep a <strong>backup</strong> GPT-5.4 deployment configured (R-006). Switch by changing the shared
+  <code>AZURE_OPENAI_*</code> values.</li>
+<li>If the network is down, use the offline fallback pack and demonstrate from your pre-runs.</li>
+</ul>
+<h2 id="credentials-distribution-and-revocation">Credentials: distribution and revocation</h2>
+<ul>
+<li>Distribute keys only through the controlled channel; never in slides or chat.</li>
+<li>After the session, <strong>rotate or revoke</strong> all temporary keys within the defined window (SC-024).
+  Confirm revocation with the resource owner.</li>
+</ul>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

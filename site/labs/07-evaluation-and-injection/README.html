@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 07 — Evaluation and Prompt-Injection Testing · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 07 — Evaluation and Prompt-Injection Testing
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-07-evaluation-and-prompt-injection-testing">Lab 07 — Evaluation and Prompt-Injection Testing</h1>
+<p><strong>Last updated: Jul-14-2026</strong></p>
+<p>Turn "it feels better" into <strong>evidence</strong>. Compare prompt variants with a repeatable rubric, then
+test a defensive prompt against benign adversarial input — and record failures honestly.</p>
+<p><code>INTERMEDIATE</code> · ⏱️ 15 MIN · 📂 EVALUATION &amp; SECURITY</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Persona</th>
+<th>Duration</th>
+<th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>300</td>
+<td>Anyone (no coding required)</td>
+<td>15 minutes (10 evaluation + 5 injection)</td>
+<td>Score variants across five scenario types, surface improvements and regressions, and demonstrate that prompt wording is one layer of defense — not the whole security story.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">📋 Contents</h2>
+<ol>
+<li><a href="#-why-this-matters">Why this matters</a></li>
+<li><a href="#-scenario">Scenario</a></li>
+<li><a href="#-core-concepts">Core concepts</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+<li><a href="#-what-youll-accomplish">What you'll accomplish</a></li>
+<li><a href="#-part-a--evaluation">Part A — Evaluation</a></li>
+<li><a href="#-part-b--prompt-injection-testing">Part B — Prompt-injection testing</a></li>
+<li><a href="#-checkpoint">Checkpoint</a></li>
+<li><a href="#-test-your-understanding--reflection">Test your understanding &amp; reflection</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+<li><a href="#-optional-challenge">Optional challenge</a></li>
+<li><a href="#-summary">Summary</a></li>
+</ol>
+<h2 id="why-this-matters">🤔 Why this matters</h2>
+<p>Evaluation-driven iteration is the main difference between casual prompting and prompt engineering.
+And because enterprise prompts process untrusted text, you must understand both the value <strong>and the
+limits</strong> of defensive prompt design.</p>
+<h2 id="scenario">🌐 Scenario</h2>
+<p>You compare a baseline and improved prompt across the five scenario types (normal, ambiguous,
+missing-information, edge, adversarial), then run a <strong>defensive</strong> triage prompt against benign,
+synthetic injection attempts.</p>
+<h2 id="core-concepts">🎓 Core concepts</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Evaluation rubric</strong></td>
+<td>Scores responses on defined criteria (0–2), so comparisons are evidence-based.</td>
+</tr>
+<tr>
+<td><strong>Regression</strong></td>
+<td>A change that improves one thing but worsens another — the rubric makes it visible.</td>
+</tr>
+<tr>
+<td><strong>Prompt injection</strong></td>
+<td>Untrusted text that tries to hijack the task.</td>
+</tr>
+<tr>
+<td><strong>Defense in depth</strong></td>
+<td>Layering safeguards; prompt wording alone is not a complete boundary.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">✅ Prerequisites</h2>
+<ul>
+<li><strong>Labs 01, 02, and 04</strong> completed.</li>
+<li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+</ul>
+<h2 id="what-youll-accomplish">🎯 What you'll accomplish</h2>
+<ul>
+<li>Score two prompt variants on identical inputs and name an improvement or regression.</li>
+<li>Run a defensive prompt against adversarial cases and record the outcome honestly.</li>
+</ul>
+<h2 id="part-a-evaluation">🧪 Part A — Evaluation</h2>
+<p><strong>Summary of tasks:</strong> run a baseline and improved variant (e.g. Lab 04) on the <strong>same</strong> cases and
+score both with the rubric.</p>
+<h3 id="step-by-step-instructions">Step-by-step instructions</h3>
+<ol>
+<li>Pick a lab with baseline/improved variants (e.g. <code>04-structured-output</code>).</li>
+<li>Run both variants on the same cases and score each with the
+   <a href="../../rubrics/standard-rubric.html">standard rubric</a>.</li>
+<li>Record improvements <strong>and</strong> regressions. A change that fixes the happy path but breaks
+   missing-information handling is a regression you must surface.</li>
+<li><strong>Facilitator deterministic runner (optional):</strong>
+   <code>python evaluation/facilitator/run_evaluation.py --lab 04-structured-output --variant improved --runs 3</code></li>
+</ol>
+<h2 id="part-b-prompt-injection-testing">🛡️ Part B — Prompt-injection testing</h2>
+<p><strong>Summary of tasks:</strong> run the defensive prompt against benign adversarial cases.</p>
+<h3 id="step-by-step-instructions_1">Step-by-step instructions</h3>
+<ol>
+<li>Run the defensive (<code>improved</code>) variant on each adversarial case:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 07-evaluation-and-injection --case adversarial-ignore-01 --variant improved</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 07-evaluation-and-injection --case adversarial-ignore-01 --variant improved</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 07-evaluation-and-injection --case adversarial-ignore-01 --variant improved"</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>See <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<p>Also try <code>adversarial-reveal-01</code> and <code>adversarial-outofscope-01</code>.</p>
+<ol start="2">
+<li>Confirm the model keeps triaging, refuses to reveal instructions/secrets, and stays in scope.</li>
+</ol>
+<blockquote>
+<p><strong>Honesty rule.</strong> If an adversarial test <strong>bypasses</strong> the boundary, record it as a <strong>failed</strong>
+test and note that application-level safeguards are required. Do not retry until you get a clean
+run and present only that.</p>
+</blockquote>
+<p>🏅 <strong>Congratulations!</strong> You evaluated with evidence and tested defenses honestly.</p>
+<h2 id="checkpoint">🏅 Checkpoint</h2>
+<ul>
+<li>[ ] You scored a baseline and improved variant on the same inputs and named one improvement or regression.</li>
+<li>[ ] You ran at least one adversarial case and recorded the outcome honestly.</li>
+</ul>
+<h2 id="test-your-understanding-reflection">🤔 Test your understanding &amp; reflection</h2>
+<ol>
+<li>Did the improved prompt improve one criterion while regressing another?</li>
+<li>Why is a passing injection test <strong>not</strong> proof the prompt is secure?</li>
+</ol>
+<h2 id="troubleshooting">🧭 Troubleshooting</h2>
+<ul>
+<li>Deterministic runner import error → run from the repository root.</li>
+<li>Coding blocked? Use <a href="portal.html">portal.md</a>. See
+  <a href="../../docs/troubleshooting.html">../../docs/troubleshooting.md</a>.</li>
+</ul>
+<h2 id="optional-challenge">🏆 Optional challenge</h2>
+<p>See <a href="challenge.html">challenge.md</a>. Optional.</p>
+<h2 id="summary">📖 Summary</h2>
+<p>You made prompt decisions evidence-based and saw the limits of prompt-only defenses. <strong>Lab 08</strong>
+combines every technique into one reusable capstone prompt.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

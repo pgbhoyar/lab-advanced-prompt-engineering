@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 00 — Access and Baseline · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 00 — Access and Baseline
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-00-access-and-baseline">Lab 00 — Access and Baseline</h1>
+<p><strong>Last updated: Jul-14-2026</strong></p>
+<p>Get your workshop environment working and capture your first, <strong>unoptimized</strong> model response.
+This baseline is the "before" picture you will improve throughout the rest of the workshop.</p>
+<p><code>BEGINNER</code> · ⏱️ 8 MIN · 📂 SETUP &amp; BASELINE</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Persona</th>
+<th>Duration</th>
+<th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>Anyone (no coding required)</td>
+<td>8 minutes</td>
+<td>Confirm you can reach the workshop model on your chosen track, run a prompt, and save a baseline response with two observable weaknesses to compare against later.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">📋 Contents</h2>
+<ol>
+<li><a href="#-why-this-matters">Why this matters</a></li>
+<li><a href="#-scenario">Scenario</a></li>
+<li><a href="#-core-concepts">Core concepts</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+<li><a href="#-what-youll-accomplish">What you'll accomplish</a></li>
+<li><a href="#-choose-your-track">Choose your track</a></li>
+<li><a href="#-exercise-run-the-baseline-prompt">Exercise: Run the baseline prompt</a></li>
+<li><a href="#-checkpoint">Checkpoint</a></li>
+<li><a href="#-test-your-understanding--reflection">Test your understanding &amp; reflection</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+<li><a href="#-optional-challenge">Optional challenge</a></li>
+<li><a href="#-summary">Summary</a></li>
+</ol>
+<h2 id="why-this-matters">🤔 Why this matters</h2>
+<p>No learning can happen until you can reach the model. A fast, reliable start means you spend the
+session on <strong>prompt engineering</strong>, not setup. Capturing a baseline now also gives you an honest
+measuring stick: every later lab is judged by how much it improves on this first attempt.</p>
+<h2 id="scenario">🌐 Scenario</h2>
+<p>You are triaging <strong>synthetic</strong> IT support requests for the <strong>Enterprise Service Request Triage
+Assistant</strong> used throughout the workshop. The starter request <code>SR-0001</code> (in
+<a href="../../datasets/triage/starter-cases.jsonl"><code>datasets/triage/starter-cases.jsonl</code></a>) describes a
+user who cannot connect to office WiFi before a client demo.</p>
+<h2 id="core-concepts">🎓 Core concepts</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prompt</strong></td>
+<td>The text you send to the model. Everything you do in this workshop is shaping prompts.</td>
+</tr>
+<tr>
+<td><strong>Baseline</strong></td>
+<td>A first, unoptimized attempt you keep for comparison. Improvement is only meaningful against a baseline.</td>
+</tr>
+<tr>
+<td><strong>Model deployment</strong></td>
+<td>The named instance of GPT-5.4 in Microsoft Foundry. Its name may differ from "GPT-5.4" — use the exact name you were given.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">✅ Prerequisites</h2>
+<ul>
+<li>Workshop access instructions from the facilitator.</li>
+<li><strong>Coding tracks only:</strong> a prepared runtime (Python 3.10+, .NET 8+, or JDK 17+).</li>
+<li>No prior AI, SDK, command-line, or prompt-engineering experience required.</li>
+<li>You have read <a href="../../docs/credential-safety.html">credential-safety.md</a> — <strong>never</strong> paste a key
+  into code, prompts, or chat, and use only synthetic data.</li>
+</ul>
+<h2 id="what-youll-accomplish">🎯 What you'll accomplish</h2>
+<ul>
+<li>Reach the workshop model on the Portal, Python, C#, or Java track.</li>
+<li>Run the baseline prompt against the starter request.</li>
+<li>Record two observable weaknesses to improve in Lab 01.</li>
+</ul>
+<h2 id="choose-your-track">🧪 Choose your track</h2>
+<p>Both tracks teach the same thing and use the same prompt and input — pick the one that fits you.</p>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Best for</th>
+<th>How you run it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Portal</strong></td>
+<td>No coding</td>
+<td>Microsoft Foundry portal — see <a href="portal.html">portal.md</a></td>
+</tr>
+<tr>
+<td><strong>Developer</strong></td>
+<td>Python / C# / Java</td>
+<td>The workshop runner CLI (below)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise-run-the-baseline-prompt">🚀 Exercise: Run the baseline prompt</h2>
+<p><strong>Summary of tasks:</strong> choose a track, confirm connectivity, run the baseline prompt on
+<code>starter-01</code>, and record the response.</p>
+<p><strong>Starting prompt</strong> (deliberately vague — see <a href="../../prompts/00-baseline/user.html"><code>prompts/00-baseline/user.md</code></a>):</p>
+<pre><code class="language-text">Look at this IT support message and tell me what to do about it.
+
+{{request_text}}
+</code></pre>
+<h3 id="step-by-step-instructions">Step-by-step instructions</h3>
+<ol>
+<li><strong>Pick your track</strong> — Portal (<a href="portal.html">portal.md</a>) or a coding language below.</li>
+<li><strong>Check connectivity.</strong> Coding tracks: run the config checker (it never prints your key).
+   - Windows: <code>pwsh scripts/setup.ps1</code>
+   - macOS / Linux: <code>bash scripts/setup.sh</code></li>
+<li><strong>Run the baseline</strong> on case <code>starter-01</code>:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 00-access-and-baseline --case starter-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 00-access-and-baseline --case starter-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 00-access-and-baseline --case starter-01 --variant baseline"</code></td>
+</tr>
+</tbody>
+</table>
+<ol start="4">
+<li><strong>Record</strong> the response and two weaknesses in
+   <a href="expected-observations.html">expected-observations.md</a>.</li>
+</ol>
+<blockquote>
+<p><strong>Note — configure credentials via environment variables only.</strong> See
+<a href="../../docs/credential-safety.html">credential-safety.md</a>. Never place a key in code.</p>
+</blockquote>
+<p>🏅 <strong>Congratulations!</strong> You reached the model and captured a baseline.</p>
+<h2 id="checkpoint">🏅 Checkpoint</h2>
+<p>You have completed this lab when:</p>
+<ul>
+<li>[ ] You received a response from the workshop model.</li>
+<li>[ ] You recorded <strong>two observable weaknesses</strong> in the baseline response.</li>
+</ul>
+<h2 id="test-your-understanding-reflection">🤔 Test your understanding &amp; reflection</h2>
+<ol>
+<li>What did the baseline prompt leave undefined (format, urgency criteria, missing-information behavior)?</li>
+<li>If two people ran this prompt, would they get comparably structured answers? Why or why not?</li>
+</ol>
+<h2 id="troubleshooting">🧭 Troubleshooting</h2>
+<ul>
+<li><strong>Missing/placeholder credentials:</strong> run <code>scripts/setup.ps1</code> / <code>setup.sh</code> to check configuration.</li>
+<li><strong>Coding setup blocked:</strong> switch to <a href="portal.html">portal.md</a> and continue this same lab.</li>
+<li><strong>No/slow response:</strong> see <a href="../../docs/troubleshooting.html">../../docs/troubleshooting.md</a> and the
+  offline sample in <a href="../../offline-fallback/baseline-output.html">../../offline-fallback/baseline-output.md</a>.</li>
+</ul>
+<h2 id="optional-challenge">🏆 Optional challenge</h2>
+<p>See <a href="challenge.html">challenge.md</a>. Optional — it does not block later labs.</p>
+<h2 id="summary">📖 Summary</h2>
+<p>You confirmed access, ran an intentionally vague prompt, and captured a baseline with observable
+weaknesses. In <strong>Lab 01</strong> you'll turn that vague prompt into an explicit, testable prompt contract.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

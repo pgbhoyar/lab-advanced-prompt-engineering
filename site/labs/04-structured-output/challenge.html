@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 04 — Challenge (Optional) · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 04 — Challenge (Optional)
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-04-challenge-optional">Lab 04 — Challenge (Optional)</h1>
+<blockquote>
+<p>Optional. Does not block later labs.</p>
+</blockquote>
+<ol>
+<li>Feed the runner a deliberately broken response via <code>validate</code>:</li>
+</ol>
+<pre><code>echo '{&quot;category&quot;:&quot;urgent&quot;}' | python -m workshop_runner validate
+</code></pre>
+<p>Observe the specific validation errors and exit code 4.
+2. Add <code>confidence</code> reasoning: ask the model to set <code>confidence: low</code> whenever
+   <code>needs_human_review</code> is true. Re-run <code>ambiguous-01</code> and check consistency.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

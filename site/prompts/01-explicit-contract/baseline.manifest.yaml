@@ -1,0 +1,15 @@
+id: triage-contract-baseline
+version: 1.0.0
+lab: 01-explicit-prompt-contract
+variant: baseline
+purpose: Vague request used as the before-comparison for the explicit prompt contract.
+user_prompt: user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/core-test-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 800
+  store: false
+known_limitations:
+  - No audience, constraints, output format, or uncertainty policy defined.

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 00 — Access and Baseline · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+      <span style="color:var(--text-muted)">|</span>
+      <a href="../../labs/00-access-and-baseline/README.html">Markdown</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 00 — Access and Baseline
+    </nav>
+
+    <header class="lab-header">
+      <h1>Lab 00 — Access and Baseline</h1>
+      <span class="updated-label">Last updated: Jul-14-2026</span>
+      <p class="lab-intro">
+        Get your workshop environment working and capture your first, <strong>unoptimized</strong>
+        model response. This baseline is the "before" picture you will improve throughout the rest
+        of the workshop.
+      </p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-setup">BEGINNER</span>
+        <span class="badge badge-duration">⏱️ 8 MIN</span>
+        <span class="badge badge-category-core">📂 SETUP &amp; BASELINE</span>
+      </div>
+    </header>
+
+    <table class="lab-detail-table">
+      <thead><tr><th>Level</th><th>Persona</th><th>Duration</th><th>Learning objective</th></tr></thead>
+      <tbody><tr>
+        <td>100</td>
+        <td>Anyone (no coding required)</td>
+        <td>8 minutes</td>
+        <td>Confirm you can reach the workshop model on your chosen track, run a prompt, and save a baseline response with two observable weaknesses to compare against later.</td>
+      </tr></tbody>
+    </table>
+
+    <nav class="lab-toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#why">Why this matters</a></li>
+        <li><a href="#scenario">Scenario</a></li>
+        <li><a href="#concepts">Core concepts</a></li>
+        <li><a href="#prereqs">Prerequisites</a></li>
+        <li><a href="#targets">What you'll accomplish</a></li>
+        <li><a href="#exercise">Exercise: run the baseline prompt</a></li>
+        <li><a href="#files">Files used in this lab</a></li>
+        <li><a href="#checkpoint">Checkpoint</a></li>
+        <li><a href="#reflection">Test your understanding &amp; reflection</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ol>
+    </nav>
+
+    <section class="lab-section" id="why">
+      <h2>🤔 Why this matters</h2>
+      <p>No learning can happen until you can reach the model. A fast, reliable start means you spend the session on <strong>prompt engineering</strong>, not setup. Capturing a baseline now also gives you an honest measuring stick: every later lab is judged by how much it improves on this first attempt.</p>
+    </section>
+
+    <section class="lab-section" id="scenario">
+      <h2>🌐 Scenario</h2>
+      <p>You are triaging <strong>synthetic</strong> IT support requests for the <strong>Enterprise Service Request Triage Assistant</strong> used throughout the workshop. The starter request <code>SR-0001</code> (in <a href="../../datasets/triage/starter-cases.jsonl">starter-cases.jsonl</a>) describes a user who cannot connect to office WiFi before a client demo.</p>
+    </section>
+
+    <section class="lab-section" id="concepts">
+      <h2>🎓 Core concepts</h2>
+      <table class="content-table">
+        <thead><tr><th>Concept</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Prompt</strong></td><td>The text you send to the model. Everything you do in this workshop is shaping prompts.</td></tr>
+          <tr><td><strong>Baseline</strong></td><td>A first, unoptimized attempt you keep for comparison. Improvement is only meaningful against a baseline.</td></tr>
+          <tr><td><strong>Model deployment</strong></td><td>The named instance of GPT-5.4 in Microsoft Foundry. Its name may differ from "GPT-5.4" — use the exact name you were given.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="prereqs">
+      <h2>✅ Prerequisites</h2>
+      <ul>
+        <li>Workshop access instructions from the facilitator.</li>
+        <li><strong>Coding tracks only:</strong> a prepared runtime (Python 3.10+, .NET 8+, or JDK 17+).</li>
+        <li>No prior AI, SDK, command-line, or prompt-engineering experience required.</li>
+        <li>You have read <a href="../../docs/credential-safety.html">credential safety</a> — never paste a key into code, prompts, or chat, and use only synthetic data.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="targets">
+      <h2>🎯 What you'll accomplish</h2>
+      <ul>
+        <li>Reach the workshop model on the Portal, Python, C#, or Java track.</li>
+        <li>Run the baseline prompt against the starter request.</li>
+        <li>Record two observable weaknesses to improve in Lab 01.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="exercise">
+      <h2>🚀 Exercise: run the baseline prompt</h2>
+      <div class="usecase-banner">
+        <span>Choose a track, confirm connectivity, run the baseline on <code>starter-01</code>, and record the response.</span>
+        <span class="uc-effort">⏱️ 8 min</span>
+      </div>
+
+      <p><strong>Starting prompt</strong> (deliberately vague):</p>
+      <pre><code>Look at this IT support message and tell me what to do about it.
+
+{{request_text}}</code></pre>
+
+      <h3>Step-by-step instructions</h3>
+      <div class="callout callout-note">
+        <span class="callout-label">Where does {{request_text}} come from?</span>
+        <p><code>{{request_text}}</code> is a <strong>placeholder</strong> — you never type it. The runner fills it automatically from the test case you pick with <code>--case</code> (the input data lives in <code>datasets/triage/&hellip;</code>). Your job is just to choose <code>--lab</code>, <code>--case</code>, and <code>--variant</code>; to use different input, pick another <code>--case</code>. <a href="../../docs/coding-tracks.html">How the coding tracks work &rarr;</a></p>
+      </div>
+      <ol class="step-list">
+        <li><strong>Pick your track.</strong> Non-coder → follow the <a href="../../labs/00-access-and-baseline/portal.html">Portal steps</a>. Developer → use the tabs below.</li>
+        <li><strong>Check connectivity</strong> (coding tracks). The checker never prints your key.
+<pre><code># Windows
+pwsh scripts/setup.ps1
+# macOS / Linux
+bash scripts/setup.sh</code></pre>
+        </li>
+        <li><strong>Run the baseline</strong> on case <code>starter-01</code>:
+          <div class="code-tabs">
+            <span class="code-tabs-label">Run baseline</span>
+            <div class="code-tab-buttons" role="tablist" aria-label="Programming language">
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="true" data-lang="python">Python</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="csharp">C#</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="java">Java</button>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="python">
+<pre><code>python -m workshop_runner run --lab 00-access-and-baseline --case starter-01 --variant baseline</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="csharp" hidden>
+<pre><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 00-access-and-baseline --case starter-01 --variant baseline</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="java" hidden>
+<pre><code>./mvnw -q exec:java -Dexec.args="run --lab 00-access-and-baseline --case starter-01 --variant baseline"</code></pre>
+            </div>
+          </div>
+        </li>
+        <li><strong>Record</strong> the response and two weaknesses in the lab's <a href="../../labs/00-access-and-baseline/expected-observations.html">worksheet</a>.</li>
+      </ol>
+
+      <div class="callout callout-note">
+        <span class="callout-label">Note — credentials</span>
+        <p>Configure credentials via environment variables only (see <a href="../../docs/credential-safety.html">credential safety</a>). Never place a key in code.</p>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-label">Portal track</span>
+        <p>No code? Follow the <a href="../../labs/00-access-and-baseline/portal.html">Portal instructions</a> for this lab — same prompt, same input, no local software.</p>
+      </div>
+
+      <p class="congrats">🏅 Congratulations! You reached the model and captured a baseline.</p>
+    </section>
+
+    <section class="lab-section" id="files">
+      <h2>📁 Files used in this lab</h2>
+      <p>Everything this lab runs on is a shared, editable file &mdash; no code required. The runner loads these by <code>--lab</code> and <code>--case</code>; edit any prompt file and all tracks (and the portal) pick up the change.</p>
+      <table class="content-table">
+        <thead><tr><th>File</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../../prompts/00-baseline/baseline.manifest.yaml"><code>prompts/00-baseline/baseline.manifest.yaml</code></a></td><td>Baseline prompt manifest (declares variables, test set, model settings)</td></tr>
+          <tr><td><a href="../../prompts/00-baseline/user.html"><code>prompts/00-baseline/user.md</code></a></td><td>Baseline user message</td></tr>
+          <tr><td><a href="../../datasets/triage/starter-cases.jsonl"><code>datasets/triage/starter-cases.jsonl</code></a></td><td>Test cases that fill the prompt placeholders</td></tr>
+          <tr><td><a href="../../rubrics/standard-rubric.html"><code>rubrics/standard-rubric.md</code></a></td><td>Scoring rubric used to compare prompts</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="checkpoint">
+      <h2>🏅 Checkpoint</h2>
+      <ul>
+        <li>You received a response from the workshop model.</li>
+        <li>You recorded <strong>two observable weaknesses</strong> in the baseline response.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="reflection">
+      <h2>🤔 Test your understanding &amp; reflection</h2>
+      <ul>
+        <li>What did the baseline prompt leave undefined (format, urgency criteria, missing-information behavior)?</li>
+        <li>If two people ran this prompt, would they get comparably structured answers? Why or why not?</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="troubleshooting">
+      <h2>🧭 Troubleshooting</h2>
+      <ul>
+        <li><strong>Missing/placeholder credentials:</strong> run <code>scripts/setup.ps1</code> / <code>setup.sh</code> to check configuration.</li>
+        <li><strong>Coding setup blocked:</strong> switch to the <a href="../../labs/00-access-and-baseline/portal.html">Portal steps</a> and continue this same lab.</li>
+        <li><strong>No/slow response:</strong> see <a href="../../docs/troubleshooting.html">troubleshooting</a> and the offline sample in <a href="../../offline-fallback/baseline-output.html">offline-fallback</a>.</li>
+      </ul>
+      <p>Optional challenge: see the lab's <a href="../../labs/00-access-and-baseline/challenge.html">challenge.md</a> — it does not block later labs.</p>
+    </section>
+
+    <nav class="lab-nav" aria-label="Lab navigation">
+      <a href="../../index.html">
+        <span class="nav-label">←  Home</span>
+        <span class="nav-title">All labs</span>
+      </a>
+      <a class="nav-next" href="../01-explicit-prompt-contract/index.html">
+        <span class="nav-label">Next lab  →</span>
+        <span class="nav-title">Lab 01 — Explicit Prompt Contract</span>
+      </a>
+    </nav>
+  </main>
+
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

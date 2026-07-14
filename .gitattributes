@@ -1,0 +1,15 @@
+# Normalize line endings for text assets
+* text=auto eol=lf
+
+*.md   text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.py   text eol=lf
+*.sh   text eol=lf
+*.ps1  text eol=lf crlf=input
+
+# Windows scripts keep CRLF
+*.cmd  text eol=crlf
+*.bat  text eol=crlf

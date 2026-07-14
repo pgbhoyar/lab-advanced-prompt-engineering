@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Fallback — Baseline Response Sample (Lab 00) · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Offline Fallback — Baseline Response Sample (Lab 00)
+    </nav>
+    <section class="lab-section">
+<h1 id="offline-fallback-baseline-response-sample-lab-00">Offline Fallback — Baseline Response Sample (Lab 00)</h1>
+<p>Use this if the network or model is unavailable during the session. This is a <strong>sanitized,
+synthetic</strong> example of a typical baseline response to <code>starter-01</code>. Actual responses vary.</p>
+<h2 id="input-sr-0001">Input (SR-0001)</h2>
+<blockquote>
+<p>Hi, my laptop won't connect to the office WiFi since this morning. I've tried restarting.
+I have a client demo at 2pm and can't get online. Everyone else on my team seems fine.
+Can someone help? - Jordan, Sales</p>
+</blockquote>
+<h2 id="example-baseline-response-vague-prompt">Example baseline response (vague prompt)</h2>
+<blockquote>
+<p>It sounds like your laptop is having trouble connecting to the WiFi. Since your teammates are
+fine, the issue is probably specific to your device. You could try forgetting the network and
+reconnecting, checking that WiFi is turned on, or restarting the router. If that doesn't work,
+contact IT support. Good luck with your demo!</p>
+</blockquote>
+<h2 id="observable-weaknesses-for-the-exercise">Observable weaknesses (for the exercise)</h2>
+<ol>
+<li>No structure — free prose that another system cannot reliably parse.</li>
+<li>No explicit <strong>category</strong> or <strong>urgency</strong>, and no criteria for them.</li>
+<li>Does not state what information is missing or whether a human should review.</li>
+</ol>
+<p>These are exactly the gaps Lab 01 (Explicit Prompt Contract) addresses.</p>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

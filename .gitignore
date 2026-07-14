@@ -1,0 +1,43 @@
+# Secrets and local configuration
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# Generated attendee outputs (never commit)
+generated-results/*
+!generated-results/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# .NET / C#
+bin/
+obj/
+*.user
+*.suo
+
+# Java
+target/
+*.class
+
+# IDE / editor
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+*.tmp

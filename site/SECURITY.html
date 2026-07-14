@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SECURITY · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> / SECURITY
+    </nav>
+    <section class="lab-section">
+<h1 id="security-policy">Security Policy</h1>
+<h2 id="workshop-credential-handling">Workshop Credential Handling</h2>
+<p>This repository is a teaching package. It contains <strong>no secrets</strong> and MUST never contain any.</p>
+<p>Workshop credentials (Microsoft Foundry endpoint, deployment name, API key) are <strong>temporary</strong>
+and are distributed only through a controlled channel by the facilitator.</p>
+<p>API keys MUST NOT be:</p>
+<ul>
+<li>Added to source code</li>
+<li>Included in prompts</li>
+<li>Committed to Git</li>
+<li>Added to screenshots</li>
+<li>Shared in public chat</li>
+<li>Printed in logs</li>
+<li>Stored in sample output</li>
+<li>Included in lab submissions</li>
+</ul>
+<p>All coding tracks read the endpoint, deployment name, and key from environment variables
+(<code>AZURE_OPENAI_BASE_URL</code>, <code>AZURE_OPENAI_API_KEY</code>, <code>AZURE_OPENAI_DEPLOYMENT</code>). Example
+configuration files (<code>.env.example</code>) contain placeholders only. Local secret files (<code>.env</code>)
+are excluded via <a href=".gitignore">.gitignore</a>.</p>
+<p>Temporary workshop keys are <strong>rotated or revoked</strong> by the facilitator within the defined
+post-workshop window. See <a href="docs/credential-safety.html">docs/credential-safety.md</a>.</p>
+<h2 id="production-guidance">Production Guidance</h2>
+<p>For production systems, use Microsoft Entra ID (managed identity), least-privilege role
+assignments, auditable permissions, and managed secret storage rather than API keys.</p>
+<h2 id="data-handling">Data Handling</h2>
+<p>Use only synthetic or approved public data. Do <strong>not</strong> enter confidential, regulated,
+proprietary, or personal information into any workshop prompt.</p>
+<h2 id="reporting">Reporting</h2>
+<p>If you discover a credential accidentally committed, or a security issue in these materials,
+notify the workshop organizer immediately and open a private report rather than a public issue.
+Rotate any exposed key without delay.</p>
+    </section>
+  </main>
+  <script src="assets/site.js"></script>
+</body>
+</html>

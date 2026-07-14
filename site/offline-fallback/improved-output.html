@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Fallback — Improved Response Sample (Lab 04 Structured Output) · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Offline Fallback — Improved Response Sample (Lab 04 Structured Output)
+    </nav>
+    <section class="lab-section">
+<h1 id="offline-fallback-improved-response-sample-lab-04-structured-output">Offline Fallback — Improved Response Sample (Lab 04 Structured Output)</h1>
+<p>Use if the network/model is unavailable. Sanitized, synthetic example of a <strong>schema-valid</strong>
+structured triage for <code>normal-01</code>. Actual responses vary but must match the schema.</p>
+<h2 id="input-sr-1001">Input (SR-1001)</h2>
+<blockquote>
+<p>My work laptop is about 5 years old and the battery now lasts only 20 minutes. I have to stay
+plugged in all day. Can I get a replacement? - Priya, Finance</p>
+</blockquote>
+<h2 id="example-improved-strict-schema-response">Example improved (strict schema) response</h2>
+<pre><code class="language-json">{
+  &quot;request_id&quot;: &quot;SR-1001&quot;,
+  &quot;summary&quot;: &quot;A ~5-year-old work laptop has poor battery life (about 20 minutes) and must stay plugged in.&quot;,
+  &quot;category&quot;: &quot;hardware&quot;,
+  &quot;urgency&quot;: &quot;medium&quot;,
+  &quot;recommended_action&quot;: &quot;Verify device age and battery health, then process a laptop replacement per the 4-year policy.&quot;,
+  &quot;missing_information&quot;: [],
+  &quot;evidence&quot;: [&quot;Laptop is about 5 years old&quot;, &quot;Battery lasts only ~20 minutes&quot;],
+  &quot;confidence&quot;: &quot;high&quot;,
+  &quot;needs_human_review&quot;: false
+}
+</code></pre>
+<h2 id="why-it-passes">Why it passes</h2>
+<p>Single JSON object, all nine fields, valid enums, arrays for the list fields, no extra keys, no
+secrets, <code>request_id</code> echoed. Contrast with the baseline "reply in JSON" which often adds prose or
+a <code>priority</code> field — a <strong>failed</strong> structured output.</p>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

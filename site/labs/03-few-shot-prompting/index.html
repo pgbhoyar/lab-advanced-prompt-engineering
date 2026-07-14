@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 03 — Few-Shot Prompting · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+      <span style="color:var(--text-muted)">|</span>
+      <a href="../../labs/03-few-shot-prompting/README.html">Markdown</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 03 — Few-Shot Prompting
+    </nav>
+
+    <header class="lab-header">
+      <h1>Lab 03 — Few-Shot Prompting</h1>
+      <span class="updated-label">Last updated: Jul-14-2026</span>
+      <p class="lab-intro">
+        When instructions alone are ambiguous, a few <strong>representative examples</strong> can
+        sharpen the model's decisions. You'll improve a tricky classification with a small,
+        consistent example set.
+      </p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-beginner">BEGINNER–INT.</span>
+        <span class="badge badge-duration">⏱️ 10 MIN</span>
+        <span class="badge badge-category-core">📂 FEW-SHOT PROMPTING</span>
+      </div>
+    </header>
+
+    <table class="lab-detail-table">
+      <thead><tr><th>Level</th><th>Persona</th><th>Duration</th><th>Learning objective</th></tr></thead>
+      <tbody><tr>
+        <td>200</td>
+        <td>Anyone (no coding required)</td>
+        <td>10 minutes</td>
+        <td>Compare zero-shot vs few-shot classification on a boundary case (a phishing link that should be security, not software) and see the pattern applied to new input.</td>
+      </tr></tbody>
+    </table>
+
+    <nav class="lab-toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#why">Why this matters</a></li>
+        <li><a href="#scenario">Scenario</a></li>
+        <li><a href="#concepts">Core concepts</a></li>
+        <li><a href="#prereqs">Prerequisites</a></li>
+        <li><a href="#targets">What you'll accomplish</a></li>
+        <li><a href="#observe">Exercise: observe zero-shot</a></li>
+        <li><a href="#improve">Exercise: add few-shot examples</a></li>
+        <li><a href="#files">Files used in this lab</a></li>
+        <li><a href="#checkpoint">Checkpoint</a></li>
+        <li><a href="#reflection">Test your understanding &amp; reflection</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ol>
+    </nav>
+
+    <section class="lab-section" id="why">
+      <h2>🤔 Why this matters</h2>
+      <p>Some boundaries are hard to describe in words but easy to show. Few-shot prompting is a widely applicable technique that produces an easily observable before-and-after — as long as the examples are accurate and consistent.</p>
+    </section>
+
+    <section class="lab-section" id="scenario">
+      <h2>🌐 Scenario</h2>
+      <p>Classify triage categories. The boundary between <strong>security</strong> and <strong>software</strong> is easy to get wrong without examples (a clicked phishing link looks like a "pop-up" problem).</p>
+    </section>
+
+    <section class="lab-section" id="concepts">
+      <h2>🎓 Core concepts</h2>
+      <table class="content-table">
+        <thead><tr><th>Concept</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Zero-shot</strong></td><td>Instructions only, no examples.</td></tr>
+          <tr><td><strong>Few-shot</strong></td><td>A handful of example input/output pairs that demonstrate the desired behavior.</td></tr>
+          <tr><td><strong>Boundary case</strong></td><td>An input near the line between two categories, where examples help most.</td></tr>
+          <tr><td><strong>Consistency</strong></td><td>Examples must be accurate and internally consistent — a wrong example teaches wrong behavior.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="prereqs">
+      <h2>✅ Prerequisites</h2>
+      <ul>
+        <li><strong>Lab 01</strong> completed.</li>
+        <li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="targets">
+      <h2>🎯 What you'll accomplish</h2>
+      <ul>
+        <li>Record a zero-shot classification and its rationale.</li>
+        <li>Add representative, consistent examples covering multiple categories.</li>
+        <li>Observe the few-shot prompt apply the demonstrated pattern to a new case.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="observe">
+      <h2>🚀 Exercise: observe zero-shot</h2>
+      <div class="usecase-banner">
+        <span>Run zero-shot on <code>few-shot-boundary-01</code> (a clicked phishing link) and record the category.</span>
+        <span class="uc-effort">⏱️ 4 min</span>
+      </div>
+      <div class="callout callout-note">
+        <span class="callout-label">Where does {{request_text}} come from?</span>
+        <p><code>{{request_text}}</code> is a <strong>placeholder</strong> — you never type it. The runner fills it automatically from the test case you pick with <code>--case</code> (the input data lives in <code>datasets/triage/&hellip;</code>). Your job is just to choose <code>--lab</code>, <code>--case</code>, and <code>--variant</code>; to use different input, pick another <code>--case</code>. <a href="../../docs/coding-tracks.html">How the coding tracks work &rarr;</a></p>
+      </div>
+      <ol class="step-list">
+        <li>Run the <strong>baseline</strong> (zero-shot) variant:
+          <div class="code-tabs">
+            <span class="code-tabs-label">Run zero-shot</span>
+            <div class="code-tab-buttons" role="tablist" aria-label="Programming language">
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="true" data-lang="python">Python</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="csharp">C#</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="java">Java</button>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="python">
+<pre><code>python -m workshop_runner run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant baseline</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="csharp" hidden>
+<pre><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant baseline</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="java" hidden>
+<pre><code>./mvnw -q exec:java -Dexec.args="run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant baseline"</code></pre>
+            </div>
+          </div>
+        </li>
+        <li>Zero-shot may mislabel it as <strong>software</strong>. Record the category and reason.</li>
+      </ol>
+      <div class="callout callout-tip">
+        <span class="callout-label">Portal track</span>
+        <p>Follow the <a href="../../labs/03-few-shot-prompting/portal.html">Portal instructions</a>.</p>
+      </div>
+    </section>
+
+    <section class="lab-section" id="improve">
+      <h2>🔧 Exercise: add few-shot examples</h2>
+      <div class="usecase-banner">
+        <span>Run the few-shot variant — three consistent examples including a boundary example.</span>
+        <span class="uc-effort">⏱️ 6 min</span>
+      </div>
+      <ol class="step-list">
+        <li>Run the <strong>improved</strong> (few-shot) variant on the same case:
+          <div class="code-tabs">
+            <span class="code-tabs-label">Run few-shot</span>
+            <div class="code-tab-buttons" role="tablist" aria-label="Programming language">
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="true" data-lang="python">Python</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="csharp">C#</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="java">Java</button>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="python">
+<pre><code>python -m workshop_runner run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant improved</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="csharp" hidden>
+<pre><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant improved</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="java" hidden>
+<pre><code>./mvnw -q exec:java -Dexec.args="run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant improved"</code></pre>
+            </div>
+          </div>
+        </li>
+        <li>Confirm it now classifies the boundary case as <strong>security</strong> and applies the pattern rather than copying an example. Score with the <a href="../../rubrics/standard-rubric.html">standard rubric</a> (task correctness).</li>
+      </ol>
+      <p class="congrats">🏅 Congratulations! You improved an ambiguous classification with few-shot examples.</p>
+    </section>
+
+    <section class="lab-section" id="files">
+      <h2>📁 Files used in this lab</h2>
+      <p>Everything this lab runs on is a shared, editable file &mdash; no code required. The runner loads these by <code>--lab</code> and <code>--case</code>; edit any prompt file and all tracks (and the portal) pick up the change.</p>
+      <table class="content-table">
+        <thead><tr><th>File</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../../prompts/03-few-shot/fewshot.manifest.yaml"><code>prompts/03-few-shot/fewshot.manifest.yaml</code></a></td><td>Improved prompt manifest (declares variables, test set, model settings)</td></tr>
+          <tr><td><a href="../../prompts/03-few-shot/fewshot-system.html"><code>prompts/03-few-shot/fewshot-system.md</code></a></td><td>Improved system instructions</td></tr>
+          <tr><td><a href="../../prompts/03-few-shot/user.html"><code>prompts/03-few-shot/user.md</code></a></td><td>Improved user message</td></tr>
+          <tr><td><a href="../../datasets/triage/edge-cases.jsonl"><code>datasets/triage/edge-cases.jsonl</code></a></td><td>Test cases that fill the prompt placeholders</td></tr>
+          <tr><td><a href="../../prompts/03-few-shot/zeroshot.manifest.yaml"><code>prompts/03-few-shot/zeroshot.manifest.yaml</code></a></td><td>Baseline prompt manifest (declares variables, test set, model settings)</td></tr>
+          <tr><td><a href="../../prompts/03-few-shot/system.html"><code>prompts/03-few-shot/system.md</code></a></td><td>Baseline system instructions</td></tr>
+          <tr><td><a href="../../rubrics/standard-rubric.html"><code>rubrics/standard-rubric.md</code></a></td><td>Scoring rubric used to compare prompts</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="checkpoint">
+      <h2>🏅 Checkpoint</h2>
+      <ul>
+        <li>You ran zero-shot and few-shot on the same case.</li>
+        <li>The few-shot variant applied the demonstrated pattern (not a copied example).</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="reflection">
+      <h2>🤔 Test your understanding &amp; reflection</h2>
+      <ul>
+        <li>Did the model copy an example literally, or apply the pattern to new input?</li>
+        <li>What would happen if one example were inconsistent or wrong?</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="troubleshooting">
+      <h2>🧭 Troubleshooting</h2>
+      <ul>
+        <li>If few-shot performs worse, check the examples are accurate and consistent — a bad example teaches bad behavior.</li>
+        <li>Coding blocked? Use the <a href="../../labs/03-few-shot-prompting/portal.html">Portal steps</a>. See <a href="../../docs/troubleshooting.html">troubleshooting</a>.</li>
+      </ul>
+      <p>Optional challenge: <a href="../../labs/03-few-shot-prompting/challenge.html">challenge.md</a>.</p>
+    </section>
+
+    <nav class="lab-nav" aria-label="Lab navigation">
+      <a href="../02-instruction-hierarchy/index.html">
+        <span class="nav-label">←  Previous lab</span>
+        <span class="nav-title">Lab 02 — Instruction Hierarchy</span>
+      </a>
+      <a class="nav-next" href="../04-structured-output/index.html">
+        <span class="nav-label">Next lab  →</span>
+        <span class="nav-title">Lab 04 — Structured Output</span>
+      </a>
+    </nav>
+  </main>
+
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

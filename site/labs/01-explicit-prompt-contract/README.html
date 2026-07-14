@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 01 — Explicit Prompt Contract · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 01 — Explicit Prompt Contract
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-01-explicit-prompt-contract">Lab 01 — Explicit Prompt Contract</h1>
+<p><strong>Last updated: Jul-14-2026</strong></p>
+<p>Turn a vague request into an <strong>explicit prompt contract</strong> — objective, audience, context,
+instructions, constraints, output format, and an uncertainty policy — and watch model behavior
+become measurable and consistent.</p>
+<p><code>BEGINNER</code> · ⏱️ 10 MIN · 📂 PROMPT CONTRACTS</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Persona</th>
+<th>Duration</th>
+<th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Anyone (no coding required)</td>
+<td>10 minutes</td>
+<td>Replace subjective wording ("make it better") with observable requirements, then compare a baseline and improved prompt on the same input using the standard rubric.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">📋 Contents</h2>
+<ol>
+<li><a href="#-why-this-matters">Why this matters</a></li>
+<li><a href="#-scenario">Scenario</a></li>
+<li><a href="#-core-concepts">Core concepts</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+<li><a href="#-what-youll-accomplish">What you'll accomplish</a></li>
+<li><a href="#-exercise-observe-the-vague-baseline">Exercise: Observe the vague baseline</a></li>
+<li><a href="#-exercise-apply-an-explicit-contract">Exercise: Apply an explicit contract</a></li>
+<li><a href="#-test--evaluate">Test &amp; evaluate</a></li>
+<li><a href="#-checkpoint">Checkpoint</a></li>
+<li><a href="#-test-your-understanding--reflection">Test your understanding &amp; reflection</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+<li><a href="#-optional-challenge">Optional challenge</a></li>
+<li><a href="#-summary">Summary</a></li>
+</ol>
+<h2 id="why-this-matters">🤔 Why this matters</h2>
+<p>"Make it better" is not a specification. When expectations are vague, results vary and you can't
+tell whether a change helped. An explicit contract makes the model's job — and your evaluation —
+<strong>observable</strong>. This is the foundation every later lab builds on.</p>
+<h2 id="scenario">🌐 Scenario</h2>
+<p>Same Enterprise Service Request Triage scenario. You compare two prompts on the <strong>same input</strong>, so
+the only thing that changes is the prompt itself.</p>
+<h2 id="core-concepts">🎓 Core concepts</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prompt contract</strong></td>
+<td>The explicit expectations you give the model: what to do, for whom, with what limits, and in what format.</td>
+</tr>
+<tr>
+<td><strong>Constraint</strong></td>
+<td>A hard rule (e.g. "under 150 words") the response must respect.</td>
+</tr>
+<tr>
+<td><strong>Uncertainty policy</strong></td>
+<td>What the model should do when information is missing (say so, don't guess).</td>
+</tr>
+<tr>
+<td><strong>Observable criteria</strong></td>
+<td>Requirements you can check — audience, tone, length, required content — instead of "professional" or "better".</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">✅ Prerequisites</h2>
+<ul>
+<li><strong>Lab 00</strong> completed — you have a baseline response and a working track.</li>
+<li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+</ul>
+<h2 id="what-youll-accomplish">🎯 What you'll accomplish</h2>
+<ul>
+<li>Identify at least two weaknesses in a vague prompt's output.</li>
+<li>Write an explicit contract with objective, constraints, output format, and uncertainty policy.</li>
+<li>Show, with the rubric, which contract element caused the improvement.</li>
+</ul>
+<h2 id="exercise-observe-the-vague-baseline">🚀 Exercise: Observe the vague baseline</h2>
+<p><strong>Summary of tasks:</strong> run the vague baseline on <code>normal-01</code> and note its weaknesses.</p>
+<p><strong>Baseline prompt</strong> (<a href="../../prompts/01-explicit-contract/user.html"><code>prompts/01-explicit-contract/user.md</code></a>):</p>
+<pre><code class="language-text">Please triage this support request and make it better.
+
+{{request_text}}
+</code></pre>
+<h3 id="step-by-step-instructions">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>baseline</strong> variant:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 01-explicit-prompt-contract --case normal-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 01-explicit-prompt-contract --case normal-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 01-explicit-prompt-contract --case normal-01 --variant baseline"</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>See <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>Note weaknesses: "better" is subjective, no category/urgency vocabulary, no output structure,
+   no rule for missing information.</li>
+</ol>
+<h2 id="exercise-apply-an-explicit-contract">🔧 Exercise: Apply an explicit contract</h2>
+<p><strong>Summary of tasks:</strong> run the improved prompt (with a system contract) on the <strong>same</strong> case.</p>
+<p>The improved prompt (<a href="../../prompts/01-explicit-contract/system.html"><code>prompts/01-explicit-contract/system.md</code></a>)
+defines a Job, Audience, numbered Instructions, Constraints, a labeled output structure, and an
+Uncertainty policy.</p>
+<h3 id="step-by-step-instructions_1">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>improved</strong> variant on the same case:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 01-explicit-prompt-contract --case normal-01 --variant improved</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 01-explicit-prompt-contract --case normal-01 --variant improved</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 01-explicit-prompt-contract --case normal-01 --variant improved"</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>See <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<p>🏅 <strong>Congratulations!</strong> You turned a vague request into a testable prompt contract.</p>
+<h2 id="test-evaluate">🧮 Test &amp; evaluate</h2>
+<p>Run both variants against the <strong>same</strong> input (also try <code>ambiguous-01</code> and <code>missing-information-01</code>).
+Score each with the <a href="../../rubrics/standard-rubric.html">standard rubric</a>. Expect the improved prompt
+to score higher on <strong>instruction adherence</strong>, <strong>completeness</strong>, and <strong>output-format compliance</strong>.</p>
+<h2 id="checkpoint">🏅 Checkpoint</h2>
+<ul>
+<li>[ ] You ran the baseline and improved prompts on the <strong>same</strong> input.</li>
+<li>[ ] You scored both with the rubric and can name which contract element caused the improvement.</li>
+</ul>
+<h2 id="test-your-understanding-reflection">🤔 Test your understanding &amp; reflection</h2>
+<ol>
+<li>Which specific contract element caused the biggest improvement?</li>
+<li>How did the uncertainty policy change the response on <code>missing-information-01</code>?</li>
+</ol>
+<h2 id="troubleshooting">🧭 Troubleshooting</h2>
+<ul>
+<li>If the improved response ignores a rule, confirm you selected <code>--variant improved</code> and the
+  <strong>same</strong> case as the baseline.</li>
+<li>Coding blocked? Switch to <a href="portal.html">portal.md</a>. See
+  <a href="../../docs/troubleshooting.html">../../docs/troubleshooting.md</a>.</li>
+</ul>
+<h2 id="optional-challenge">🏆 Optional challenge</h2>
+<p>See <a href="challenge.html">challenge.md</a>. Optional — does not block later labs.</p>
+<h2 id="summary">📖 Summary</h2>
+<p>You replaced vague wording with an explicit, observable contract and proved the improvement with a
+rubric. Next, <strong>Lab 02</strong> separates your stable instructions from untrusted input.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

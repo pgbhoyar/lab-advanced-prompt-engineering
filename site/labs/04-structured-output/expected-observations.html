@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 04 — Expected Observations · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 04 — Expected Observations
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-04-expected-observations">Lab 04 — Expected Observations</h1>
+<p>Judge by characteristics; wording varies but the <strong>structure</strong> must be exact.</p>
+<h2 id="baseline-typical-weaknesses">Baseline — typical weaknesses</h2>
+<ul>
+<li>Prose before/after the JSON ("Here is the triage: { ... } Hope this helps!").</li>
+<li>Field names differ from the contract (e.g. <code>priority</code> instead of <code>urgency</code>).</li>
+<li>Values outside the allowed set (e.g. <code>urgency: "urgent"</code>).</li>
+<li>Missing fields (no <code>needs_human_review</code>, no <code>evidence</code>).</li>
+</ul>
+<h2 id="improved-expected-characteristics">Improved — expected characteristics</h2>
+<ul>
+<li>A single JSON object, nothing outside it.</li>
+<li>All nine fields present: <code>request_id, summary, category, urgency, recommended_action,
+  missing_information, evidence, confidence, needs_human_review</code>.</li>
+<li><code>category</code>, <code>urgency</code>, <code>confidence</code> use only allowed enum values.</li>
+<li><code>normal-01</code>: category <code>hardware</code>, <code>request_id</code> = <code>SR-1001</code>, empty <code>missing_information</code> (or a
+  minor item), <code>needs_human_review</code> likely <code>false</code>.</li>
+<li><code>missing-information-01</code>: non-empty <code>missing_information</code>, <code>needs_human_review: true</code>.</li>
+</ul>
+<h2 id="teaching-point">Teaching point</h2>
+<p>A fluent, confident response that breaks the schema is a <strong>failed</strong> structured output. The runner
+scores it exit code 4 / <code>VALIDATION: FAIL</code>; the portal checklist marks it FAIL.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

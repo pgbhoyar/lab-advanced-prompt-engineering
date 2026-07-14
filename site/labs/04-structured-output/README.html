@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 04 — Structured Output · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 04 — Structured Output
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-04-structured-output">Lab 04 — Structured Output</h1>
+<p><strong>Last updated: Jul-14-2026</strong></p>
+<p>Move from conversational replies to a <strong>strict, machine-readable output contract</strong>. You'll compare
+a loose "reply in JSON" prompt with a schema-enforced prompt and validate the result.</p>
+<p><code>INTERMEDIATE</code> · ⏱️ 15 MIN · 📂 STRUCTURED OUTPUT</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Persona</th>
+<th>Duration</th>
+<th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>300</td>
+<td>Anyone (no coding required)</td>
+<td>15 minutes</td>
+<td>Produce a triage object with all required fields and valid enum values, and validate it programmatically (coding) or with a manual checklist (portal).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">📋 Contents</h2>
+<ol>
+<li><a href="#-why-this-matters">Why this matters</a></li>
+<li><a href="#-scenario">Scenario</a></li>
+<li><a href="#-core-concepts">Core concepts</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+<li><a href="#-what-youll-accomplish">What you'll accomplish</a></li>
+<li><a href="#-exercise-observe-loose-json">Exercise: Observe loose "JSON"</a></li>
+<li><a href="#-exercise-enforce-a-strict-schema">Exercise: Enforce a strict schema</a></li>
+<li><a href="#-test--evaluate">Test &amp; evaluate</a></li>
+<li><a href="#-checkpoint">Checkpoint</a></li>
+<li><a href="#-test-your-understanding--reflection">Test your understanding &amp; reflection</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+<li><a href="#-optional-challenge">Optional challenge</a></li>
+<li><a href="#-summary">Summary</a></li>
+</ol>
+<h2 id="why-this-matters">🤔 Why this matters</h2>
+<p>Real applications consume model output as data, not prose. A fluent answer that breaks the schema
+is a <strong>failed</strong> result — it can't be parsed downstream. Structured output is the transition from
+chatting with a model to building on it.</p>
+<h2 id="scenario">🌐 Scenario</h2>
+<p>A downstream system needs a machine-readable triage object. You compare a loose "reply in JSON"
+prompt with a strict schema-enforced prompt using
+<a href="../../schemas/triage-output.schema.json"><code>schemas/triage-output.schema.json</code></a>.</p>
+<h2 id="core-concepts">🎓 Core concepts</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Schema</strong></td>
+<td>Defines the exact shape of a response — fields, types, allowed values.</td>
+</tr>
+<tr>
+<td><strong>Enum</strong></td>
+<td>A fixed set of allowed values (e.g. urgency ∈ {low, medium, high, critical}).</td>
+</tr>
+<tr>
+<td><strong>Strict structured output</strong></td>
+<td>The model must return valid JSON matching the schema, with no extra text or fields.</td>
+</tr>
+<tr>
+<td><strong>Failed structured output</strong></td>
+<td>A fluent response that violates the contract — scored as a failure.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">✅ Prerequisites</h2>
+<ul>
+<li><strong>Lab 01</strong> completed.</li>
+<li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+</ul>
+<h2 id="what-youll-accomplish">🎯 What you'll accomplish</h2>
+<ul>
+<li>Produce a single JSON object with all nine required fields and valid enums.</li>
+<li>Validate it automatically (coding) or with the portal checklist.</li>
+<li>Recognize that a fluent but non-compliant response is a failure.</li>
+</ul>
+<h2 id="exercise-observe-loose-json">🚀 Exercise: Observe loose "JSON"</h2>
+<p><strong>Summary of tasks:</strong> run the baseline "reply in JSON" prompt on <code>normal-01</code> and note contract
+issues.</p>
+<h3 id="step-by-step-instructions">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>baseline</strong> variant:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 04-structured-output --case normal-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 04-structured-output --case normal-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 04-structured-output --case normal-01 --variant baseline"</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>See <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>Note issues: prose around the JSON, wrong field names (<code>priority</code> vs <code>urgency</code>), invalid enum
+   values, or missing fields.</li>
+</ol>
+<h2 id="exercise-enforce-a-strict-schema">🔧 Exercise: Enforce a strict schema</h2>
+<p><strong>Summary of tasks:</strong> run the improved prompt, which sends the strict schema (all fields required,
+enums constrained, <code>additionalProperties: false</code>).</p>
+<h3 id="step-by-step-instructions_1">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>improved</strong> variant on the same case (swap to <code>--variant improved</code>). The runner
+   <strong>automatically validates</strong> the response and prints <code>VALIDATION: PASS</code> / <code>FAIL</code> (exit code 4 on
+   failure).</li>
+<li>Try <code>missing-information-01</code>: confirm <code>missing_information</code> is a non-empty array and
+   <code>needs_human_review</code> is <code>true</code>.</li>
+</ol>
+<blockquote>
+<p><strong>Note — portal validation.</strong> If the portal exposes a JSON-schema option, attach the shared
+schema; otherwise validate by hand with the
+<a href="../../rubrics/structured-output-checklist.html">structured-output checklist</a>.</p>
+</blockquote>
+<p>🏅 <strong>Congratulations!</strong> You produced and validated a strict structured output.</p>
+<h2 id="test-evaluate">🧮 Test &amp; evaluate</h2>
+<p>Run the improved prompt on <code>normal-01</code> and <code>missing-information-01</code>. Score with the
+<a href="../../rubrics/standard-rubric.html">standard rubric</a>, focusing on <strong>output-format compliance</strong>.</p>
+<h2 id="checkpoint">🏅 Checkpoint</h2>
+<ul>
+<li>[ ] Improved response contains all nine required fields with valid enum values.</li>
+<li>[ ] You validated it (runner <code>VALIDATION: PASS</code>, or the portal checklist).</li>
+</ul>
+<h2 id="test-your-understanding-reflection">🤔 Test your understanding &amp; reflection</h2>
+<ol>
+<li>What did the strict schema fix that "reply in JSON" did not?</li>
+<li>How is the missing-information case represented in the structured output?</li>
+</ol>
+<h2 id="troubleshooting">🧭 Troubleshooting</h2>
+<ul>
+<li><code>VALIDATION: FAIL — Unexpected field</code> → the model added a key not in the contract; rely on
+  schema-enforced mode or tighten the instruction.</li>
+<li>Portal has no schema option? Request the schema in the prompt and use the checklist.</li>
+<li>See <a href="../../docs/troubleshooting.html">../../docs/troubleshooting.md</a>.</li>
+</ul>
+<h2 id="optional-challenge">🏆 Optional challenge</h2>
+<p>See <a href="challenge.html">challenge.md</a>. Optional.</p>
+<h2 id="summary">📖 Summary</h2>
+<p>You enforced and validated a strict output contract. <strong>Lab 05</strong> breaks a complex task into
+independently testable stages.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

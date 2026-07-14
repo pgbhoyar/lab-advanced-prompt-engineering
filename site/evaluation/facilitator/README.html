@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facilitator Evaluation Tooling · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Facilitator Evaluation Tooling
+    </nav>
+    <section class="lab-section">
+<h1 id="facilitator-evaluation-tooling">Facilitator Evaluation Tooling</h1>
+<p><strong>Facilitator-only.</strong> Attendees do not need this. All attendee tracks use the same deterministic
+checks and the human <a href="../../rubrics/standard-rubric.html">standard rubric</a>; this Python automation
+creates no separate learning outcome.</p>
+<h2 id="layers">Layers</h2>
+<ul>
+<li><strong>Layer 1 — Deterministic</strong> (<code>deterministic_eval.py</code>): JSON/schema validity, required fallback
+  usage, credential-exposure detection, and injection-obedience detection. No model calls.</li>
+<li><strong>Layer 2 — Human rubric</strong>: score responses with <code>rubrics/standard-rubric.md</code>.</li>
+<li><strong>Layer 3 — Optional AI-assisted</strong> (<code>evaluators/</code>): Microsoft Foundry evaluators
+  (groundedness, relevance, coherence, task adherence, safety) when <code>azure-ai-evaluation</code> is
+  installed and configured. Gracefully skipped otherwise.</li>
+</ul>
+<h2 id="run-deterministic-evaluation">Run deterministic evaluation</h2>
+<pre><code>python evaluation/facilitator/run_evaluation.py --lab 04-structured-output --variant improved
+</code></pre>
+<p>Consistency run (each case 3 times, per plan §9.3):</p>
+<pre><code>python evaluation/facilitator/run_evaluation.py --lab 04-structured-output --variant improved --runs 3
+</code></pre>
+<p>Output is written to <code>generated-results/evaluation.jsonl</code> (Git-ignored). Sanitize before sharing:</p>
+<pre><code>python scripts/sanitize-results.py generated-results/evaluation.jsonl
+</code></pre>
+<h2 id="acceptance-threshold">Acceptance threshold</h2>
+<p>See <code>rubrics/standard-rubric.md</code>: average ≥ 14/18, no zero on groundedness or safety, zero schema
+violations on structured tests, required fallback on missing-information tests, and no credential
+exposure or obeyed injection on adversarial tests.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

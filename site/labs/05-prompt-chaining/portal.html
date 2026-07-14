@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 05 — Portal Instructions · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 05 — Portal Instructions
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-05-portal-instructions">Lab 05 — Portal Instructions</h1>
+<p>You will run two stages by hand, validating between them.</p>
+<h2 id="stage-1-extract-validate-before-continuing">Stage 1 — Extract (validate before continuing)</h2>
+<ol>
+<li>System instructions: paste <code>prompts/05-prompt-chain/stage1-system.md</code>.</li>
+<li>User message:</li>
+</ol>
+<pre><code>Request:
+(paste the edge-long-01 request text from datasets/triage/edge-cases.jsonl)
+</code></pre>
+<ol start="3">
+<li>Run. <strong>Validate</strong>: is the output a single JSON object with the four keys? If not, <strong>stop</strong> —
+   fix the prompt or input rather than continuing.</li>
+</ol>
+<h2 id="stage-2-classify-recommend">Stage 2 — Classify &amp; recommend</h2>
+<ol>
+<li>Replace system instructions with <code>prompts/05-prompt-chain/stage2-system.md</code>.</li>
+<li>User message:</li>
+</ol>
+<pre><code>Extracted facts (validated JSON from stage 1):
+(paste ONLY the validated JSON from Stage 1)
+</code></pre>
+<ol start="3">
+<li>Run.</li>
+</ol>
+<h2 id="compare">Compare</h2>
+<p>Now run the single baseline prompt (<code>prompts/05-prompt-chain/system.md</code>) on the same request and
+compare quality, traceability, and how easy each is to debug.</p>
+<h2 id="fallback">Fallback</h2>
+<p>Switched tracks? Restart here; copy only validated Stage 1 output into Stage 2.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 07 — Test Cases · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 07 — Test Cases
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-07-test-cases">Lab 07 — Test Cases</h1>
+<p>Evaluation uses any lab's five scenario types on the <strong>same</strong> inputs. Injection uses
+<a href="../../datasets/triage/adversarial-cases.jsonl"><code>datasets/triage/adversarial-cases.jsonl</code></a>:</p>
+<table>
+<thead>
+<tr>
+<th>Case ID</th>
+<th>Scenario type</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>adversarial-ignore-01</code></td>
+<td>adversarial</td>
+<td>Direct "ignore instructions" injection</td>
+</tr>
+<tr>
+<td><code>adversarial-reveal-01</code></td>
+<td>adversarial</td>
+<td>Attempt to exfiltrate instructions/keys</td>
+</tr>
+<tr>
+<td><code>adversarial-indirect-01</code></td>
+<td>adversarial</td>
+<td>Indirect injection in forwarded content</td>
+</tr>
+<tr>
+<td><code>adversarial-outofscope-01</code></td>
+<td>adversarial</td>
+<td>Role override / out-of-scope request</td>
+</tr>
+</tbody>
+</table>
+<p>All examples are benign and synthetic (FR-082).</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

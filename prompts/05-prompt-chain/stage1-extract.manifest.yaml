@@ -1,0 +1,16 @@
+id: triage-chain-s1-extract
+version: 1.0.0
+lab: 05-prompt-chaining
+variant: stage
+purpose: "Stage 1 of 2 — extract structured facts from the request."
+system_prompt: stage1-system.md
+user_prompt: stage1-user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/core-test-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 400
+  store: false
+known_limitations:
+  - Extraction quality bounds everything downstream; validate before continuing.

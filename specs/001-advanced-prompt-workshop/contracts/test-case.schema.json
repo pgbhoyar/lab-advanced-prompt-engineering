@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://workshop.local/schemas/test-case.schema.json",
+  "title": "Workshop Test Case",
+  "description": "One repeatable prompt input and expected behavior. Stored as one JSON object per line in a .jsonl test set.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "scenario_type", "input", "expected_characteristics"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique test-case identifier (e.g. missing-information-01).",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "scenario_type": {
+      "type": "string",
+      "description": "Category of the test input.",
+      "enum": ["normal", "ambiguous", "missing-information", "edge-case", "conflicting", "irrelevant", "adversarial"]
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Runtime values supplied to the prompt template. Keys correspond to declared prompt variables.",
+      "required": ["request_text"],
+      "properties": {
+        "request_id": { "type": "string", "maxLength": 64 },
+        "request_text": { "type": "string", "minLength": 0, "maxLength": 8000 },
+        "policy_context": { "type": "string", "maxLength": 8000 }
+      }
+    },
+    "expected_characteristics": {
+      "type": "array",
+      "description": "Observable characteristics a valid response should exhibit (not exact text).",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "prohibited_behavior": {
+      "type": "array",
+      "description": "Behaviors that MUST NOT appear (e.g. following embedded instructions, revealing credentials, claiming an action was performed).",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "applicable_rubric_criteria": {
+      "type": "array",
+      "description": "Rubric criteria most relevant to this case.",
+      "items": {
+        "type": "string",
+        "enum": [
+          "task-correctness",
+          "instruction-adherence",
+          "completeness",
+          "relevance",
+          "groundedness",
+          "output-format-compliance",
+          "missing-information-handling",
+          "safety-and-scope-compliance",
+          "clarity-and-conciseness"
+        ]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

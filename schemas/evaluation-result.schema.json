@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://workshop.local/schemas/evaluation-result.schema.json",
+  "title": "Evaluation Result",
+  "description": "Scores and deterministic checks recorded when comparing a prompt variant against a test set.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["prompt_id", "prompt_version", "test_case_id", "scenario_type", "scores", "deterministic_checks"],
+  "properties": {
+    "prompt_id": { "type": "string", "minLength": 1 },
+    "prompt_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "test_case_id": { "type": "string", "minLength": 1 },
+    "scenario_type": {
+      "type": "string",
+      "enum": ["normal", "ambiguous", "missing-information", "edge-case", "conflicting", "irrelevant", "adversarial"]
+    },
+    "run_index": { "type": "integer", "minimum": 1 },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task-correctness", "instruction-adherence", "completeness", "relevance",
+        "groundedness", "output-format-compliance", "missing-information-handling",
+        "safety-and-scope-compliance", "clarity-and-conciseness"
+      ],
+      "properties": {
+        "task-correctness": { "$ref": "#/$defs/score" },
+        "instruction-adherence": { "$ref": "#/$defs/score" },
+        "completeness": { "$ref": "#/$defs/score" },
+        "relevance": { "$ref": "#/$defs/score" },
+        "groundedness": { "$ref": "#/$defs/score" },
+        "output-format-compliance": { "$ref": "#/$defs/score" },
+        "missing-information-handling": { "$ref": "#/$defs/score" },
+        "safety-and-scope-compliance": { "$ref": "#/$defs/score" },
+        "clarity-and-conciseness": { "$ref": "#/$defs/score" }
+      }
+    },
+    "total_score": { "type": "integer", "minimum": 0, "maximum": 18 },
+    "deterministic_checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "errors"],
+      "properties": {
+        "passed": { "type": "boolean" },
+        "errors": { "type": "array", "items": { "type": "string" } },
+        "schema_valid": { "type": "boolean" },
+        "fallback_used_when_required": { "type": "boolean" },
+        "credentials_exposed": { "type": "boolean" },
+        "followed_embedded_instruction": { "type": "boolean" }
+      }
+    },
+    "regression": { "type": "boolean" },
+    "notes": { "type": "string" }
+  },
+  "$defs": {
+    "score": { "type": "integer", "enum": [0, 1, 2] }
+  }
+}

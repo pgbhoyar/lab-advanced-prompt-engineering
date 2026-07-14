@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 08 — Portal Instructions · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 08 — Portal Instructions
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-08-portal-instructions">Lab 08 — Portal Instructions</h1>
+<h2 id="build-your-capstone-prompt">Build your capstone prompt</h2>
+<ol>
+<li>Paste <code>prompts/08-capstone-reference/system.md</code> into the <strong>system instructions</strong> field (or
+   write your own combining: strict schema, grounding, <code>&lt;source_data&gt;</code> separation, uncertainty
+   policy). If the portal supports structured output, attach
+   <a href="../../schemas/triage-output.schema.json"><code>schemas/triage-output.schema.json</code></a>.</li>
+<li>For each capstone case, paste the user message:</li>
+</ol>
+<pre><code>Request ID: CAP-001
+
+&lt;policy&gt;
+(paste the case policy_context)
+&lt;/policy&gt;
+
+&lt;source_data&gt;
+(paste the case request_text)
+&lt;/source_data&gt;
+</code></pre>
+<h2 id="test">Test</h2>
+<p>Run all four capstone cases (<code>cap-normal-01</code>, <code>cap-ambiguous-01</code>, <code>cap-missing-01</code>,
+<code>cap-adversarial-01</code>) and add one edge case of your own.</p>
+<h2 id="validate-score">Validate &amp; score</h2>
+<ul>
+<li>Use the <a href="../../rubrics/structured-output-checklist.html">structured-output checklist</a> for each
+  response.</li>
+<li>Score with the <a href="../../rubrics/capstone-rubric.html">capstone rubric</a>.</li>
+</ul>
+<h2 id="fallback">Fallback</h2>
+<p>Switched tracks? Restart here with the same prompt and inputs.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fewshot System · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Fewshot System
+    </nav>
+    <section class="lab-section">
+<p>You classify IT service requests into exactly one category:
+access, hardware, software, network, security, or other.</p>
+<p>Use the same format as the examples. Apply the pattern shown; do not copy an example verbatim.</p>
+<p>Examples:</p>
+<p>Request: "I forgot my password and the self-service reset isn't working."
+Category: access
+Reason: The user needs help regaining account access.</p>
+<p>Request: "My monitor shows no signal since this morning."
+Category: hardware
+Reason: A physical device has failed.</p>
+<p>Request: "I clicked a link in an email and now strange pop-ups appear and my saved passwords look different."
+Category: security
+Reason: Possible phishing/malware — a security signal outranks a generic software issue.</p>
+<p>Now classify the new request. Return two lines:
+Category: <one category>
+Reason: <one sentence></p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

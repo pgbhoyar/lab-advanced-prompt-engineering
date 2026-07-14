@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 05 — Prompt Decomposition and Chaining · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 05 — Prompt Decomposition and Chaining
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-05-prompt-decomposition-and-chaining">Lab 05 — Prompt Decomposition and Chaining</h1>
+<p><strong>Last updated: Jul-14-2026</strong></p>
+<p>Split a complex task into smaller <strong>stages</strong>, each with one responsibility, and validate each
+intermediate result before the next stage uses it.</p>
+<p><code>INTERMEDIATE</code> · ⏱️ 12 MIN · 📂 PROMPT CHAINING</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Persona</th>
+<th>Duration</th>
+<th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>300</td>
+<td>Anyone (no coding required)</td>
+<td>12 minutes</td>
+<td>Compare a single multi-purpose prompt with a two-stage chain (extract → validate → classify) and see a failed intermediate stage stop the chain.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">📋 Contents</h2>
+<ol>
+<li><a href="#-why-this-matters">Why this matters</a></li>
+<li><a href="#-scenario">Scenario</a></li>
+<li><a href="#-core-concepts">Core concepts</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+<li><a href="#-what-youll-accomplish">What you'll accomplish</a></li>
+<li><a href="#-exercise-observe-the-single-prompt">Exercise: Observe the single prompt</a></li>
+<li><a href="#-exercise-run-the-chain">Exercise: Run the chain</a></li>
+<li><a href="#-test--evaluate">Test &amp; evaluate</a></li>
+<li><a href="#-checkpoint">Checkpoint</a></li>
+<li><a href="#-test-your-understanding--reflection">Test your understanding &amp; reflection</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+<li><a href="#-optional-challenge">Optional challenge</a></li>
+<li><a href="#-summary">Summary</a></li>
+</ol>
+<h2 id="why-this-matters">🤔 Why this matters</h2>
+<p>Complex "do everything at once" prompts are hard to debug and easy to break. Decomposition improves
+observability, testability, and maintainability — at the cost of more moving parts. This lab shows
+when that trade-off is worth it.</p>
+<h2 id="scenario">🌐 Scenario</h2>
+<p>The baseline asks the model to classify, summarize, recommend, and draft a reply all at once. The
+chain splits this into <strong>Stage 1</strong> extract facts (JSON) → validate → <strong>Stage 2</strong> classify &amp;
+recommend from the validated facts.</p>
+<h2 id="core-concepts">🎓 Core concepts</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prompt chain</strong></td>
+<td>Several prompts run in sequence, each with one responsibility.</td>
+</tr>
+<tr>
+<td><strong>Stage</strong></td>
+<td>One step of the chain, independently inspectable and testable.</td>
+</tr>
+<tr>
+<td><strong>Intermediate validation</strong></td>
+<td>Checking a stage's output before the next stage uses it, so failures are caught, not propagated.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">✅ Prerequisites</h2>
+<ul>
+<li><strong>Labs 01 and 04</strong> completed.</li>
+<li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+</ul>
+<h2 id="what-youll-accomplish">🎯 What you'll accomplish</h2>
+<ul>
+<li>Observe weak or missing portions from a single multi-purpose prompt.</li>
+<li>Run a staged chain that validates Stage 1 before Stage 2.</li>
+<li>See an invalid intermediate output stop the chain.</li>
+</ul>
+<h2 id="exercise-observe-the-single-prompt">🚀 Exercise: Observe the single prompt</h2>
+<p><strong>Summary of tasks:</strong> run the single multi-purpose baseline on <code>edge-long-01</code> (a long, noisy
+message) and note weak or missing portions.</p>
+<h3 id="step-by-step-instructions">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>baseline</strong> (single) variant:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 05-prompt-chaining --case edge-long-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 05-prompt-chaining --case edge-long-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 05-prompt-chaining --case edge-long-01 --variant baseline"</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>See <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="exercise-run-the-chain">🔧 Exercise: Run the chain</h2>
+<p><strong>Summary of tasks:</strong> run the two-stage chain and watch per-stage validation.</p>
+<h3 id="step-by-step-instructions_1">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>chain</strong>:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner chain --lab 05-prompt-chaining --case edge-long-01</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>Manually copy the <strong>validated</strong> Stage 1 output into Stage 2 — see <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>The runner executes stages in order, prints <code>PASS</code>/<code>FAIL</code> per stage, and <strong>stops</strong> on a failed
+   intermediate validation (Stage 1 must return valid JSON).</li>
+</ol>
+<blockquote>
+<p><strong>Note — validate before you continue.</strong> In the portal, transfer only Stage 1 output that you
+confirmed is valid JSON. Garbage in Stage 1 means garbage (or a stop) in Stage 2.</p>
+</blockquote>
+<p>🏅 <strong>Congratulations!</strong> You decomposed a task into validated, independent stages.</p>
+<h2 id="test-evaluate">🧮 Test &amp; evaluate</h2>
+<p>Run the chain on <code>edge-long-01</code> and <code>conflicting-01</code>. Compare the single prompt vs the chain with
+the <a href="../../rubrics/standard-rubric.html">standard rubric</a> on <strong>completeness</strong>, <strong>relevance</strong>, and
+<strong>clarity</strong> — and discuss traceability and maintainability.</p>
+<h2 id="checkpoint">🏅 Checkpoint</h2>
+<ul>
+<li>[ ] You ran the single prompt and the chain on the same case.</li>
+<li>[ ] You saw per-stage validation status and understand where the chain would stop.</li>
+</ul>
+<h2 id="test-your-understanding-reflection">🤔 Test your understanding &amp; reflection</h2>
+<ol>
+<li>Which is easier to debug when something goes wrong — the single prompt or the chain?</li>
+<li>What did intermediate validation prevent?</li>
+</ol>
+<h2 id="troubleshooting">🧭 Troubleshooting</h2>
+<ul>
+<li>Chain stops at Stage 1 → Stage 1 did not return valid JSON; inspect its output.</li>
+<li>Coding blocked? Use <a href="portal.html">portal.md</a> and transfer validated output manually.</li>
+</ul>
+<h2 id="optional-challenge">🏆 Optional challenge</h2>
+<p>See <a href="challenge.html">challenge.md</a>. Optional.</p>
+<h2 id="summary">📖 Summary</h2>
+<p>You traded one opaque prompt for a transparent, validated chain. <strong>Lab 06</strong> grounds answers in
+supplied context and defines what to do when evidence is missing.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

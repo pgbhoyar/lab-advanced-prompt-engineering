@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hands-On: Advanced Prompt Engineering — Workshop Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="index.html">Advanced Prompt Engineering Labs</a>
+      <span style="color:var(--text-muted)">|</span>
+      <a href="README.html">Repository</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-icon">🧠</div>
+    <h1>Hands-On: Advanced Prompt Engineering</h1>
+    <p class="hero-desc">
+      Learn to design, test, evaluate, and improve prompts as reusable engineering assets — using
+      OpenAI GPT-5.4 in Microsoft Foundry. Every lab works with <strong>no code</strong> in the
+      Foundry portal, or in <strong>Python, C#, or Java</strong>.
+    </p>
+    <div class="stats">
+      <span class="stat">📊 <strong>Difficulty:</strong>&nbsp;Level&nbsp;100&ndash;300</span>
+      <span class="stat">⏱️ <strong>Session:</strong>&nbsp;~75&nbsp;minutes</span>
+      <span class="stat">📚 <strong>Labs:</strong>&nbsp;9&nbsp;(00&ndash;08)</span>
+    </div>
+  </header>
+
+  <div class="startband">
+    <div class="callout callout-tip">
+      <span class="callout-label">Start here — do this once, in order</span>
+      <p>
+        <strong>1.</strong> Read the <a href="docs/workshop-overview.html">workshop overview</a>.
+        <strong>2.</strong> Set up your track: <a href="docs/pre-workshop-setup.html">coding setup</a>
+        or <a href="docs/portal-setup.html">portal setup</a> (no code).
+        <strong>3.</strong> Read <a href="docs/credential-safety.html">credential safety</a> — never paste a real key or private data.
+        <strong>4.</strong> Start with <strong>Lab 00</strong> below and work through the labs in order.
+      </p>
+      <p>
+        <strong>Do you need to clone the repo?</strong>
+        <em>Portal track (no code)</em> → <strong>no</strong>. Just browse this site and follow the
+        <em>Portal</em> steps in each lab.
+        <em>Coding track (Python / C# / Java)</em> → <strong>yes</strong>: the runner loads the
+        shared prompts, datasets, and schemas from the repository. Clone it (or download the ZIP)
+        and work from its root — see the <a href="docs/pre-workshop-setup.html">setup guide, step 0</a>.
+      </p>
+      <p>
+        <strong>Pick your track once.</strong> Non-coder → use the <em>Portal</em> steps in each lab.
+        Developer → use the <em>Python / C# / Java</em> tabs. Your language choice is remembered across every lab.
+        If a coding step breaks, switch to the portal at the same lab — see the setup guide.
+      </p>
+    </div>
+  </div>
+
+  <main class="lab-grid">
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">0</span>
+        <h2 class="lab-title"><a href="labs/00-access-and-baseline/index.html">Access and Baseline</a></h2>
+      </div>
+      <p class="lab-desc">Get your environment working on any track and capture an unoptimized baseline response to improve later.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-setup">BEGINNER</span>
+        <span class="badge badge-duration">⏱️ 8 MIN</span>
+        <span class="badge badge-category-core">📂 SETUP &amp; BASELINE</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/00-access-and-baseline/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">1</span>
+        <h2 class="lab-title"><a href="labs/01-explicit-prompt-contract/index.html">Explicit Prompt Contract</a></h2>
+      </div>
+      <p class="lab-desc">Turn a vague request into an explicit contract — objective, constraints, output format, and an uncertainty policy — and measure the improvement.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-beginner">BEGINNER</span>
+        <span class="badge badge-duration">⏱️ 10 MIN</span>
+        <span class="badge badge-category-core">📂 PROMPT CONTRACTS</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/01-explicit-prompt-contract/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">2</span>
+        <h2 class="lab-title"><a href="labs/02-instruction-hierarchy/index.html">Instruction Hierarchy &amp; Delimited Data</a></h2>
+      </div>
+      <p class="lab-desc">Separate system behavior, the task, and untrusted source content with delimiters — and prove embedded instructions don't hijack the task.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-beginner">BEGINNER–INT.</span>
+        <span class="badge badge-duration">⏱️ 10 MIN</span>
+        <span class="badge badge-category-core">📂 INSTRUCTION HIERARCHY</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/02-instruction-hierarchy/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">3</span>
+        <h2 class="lab-title"><a href="labs/03-few-shot-prompting/index.html">Few-Shot Prompting</a></h2>
+      </div>
+      <p class="lab-desc">Use a few representative examples to sharpen an ambiguous classification, and see the model apply the pattern to new input.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-beginner">BEGINNER–INT.</span>
+        <span class="badge badge-duration">⏱️ 10 MIN</span>
+        <span class="badge badge-category-core">📂 FEW-SHOT</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/03-few-shot-prompting/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">4</span>
+        <h2 class="lab-title"><a href="labs/04-structured-output/index.html">Structured Output</a></h2>
+      </div>
+      <p class="lab-desc">Move from prose to a strict, machine-readable JSON contract and validate it programmatically or with a portal checklist.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-intermediate">INTERMEDIATE</span>
+        <span class="badge badge-duration">⏱️ 15 MIN</span>
+        <span class="badge badge-category-core">📂 STRUCTURED OUTPUT</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/04-structured-output/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">5</span>
+        <h2 class="lab-title"><a href="labs/05-prompt-chaining/index.html">Prompt Decomposition &amp; Chaining</a></h2>
+      </div>
+      <p class="lab-desc">Split a complex task into validated stages, and watch a failed intermediate stage stop the chain instead of propagating errors.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-intermediate">INTERMEDIATE</span>
+        <span class="badge badge-duration">⏱️ 12 MIN</span>
+        <span class="badge badge-category-core">📂 PROMPT CHAINING</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/05-prompt-chaining/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">6</span>
+        <h2 class="lab-title"><a href="labs/06-grounding-and-uncertainty/index.html">Grounding &amp; Uncertainty</a></h2>
+      </div>
+      <p class="lab-desc">Answer only from supplied context, return a defined fallback when evidence is missing, and label inferences versus stated facts.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-intermediate">INTERMEDIATE</span>
+        <span class="badge badge-duration">⏱️ 12 MIN</span>
+        <span class="badge badge-category-core">📂 GROUNDING</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/06-grounding-and-uncertainty/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">7</span>
+        <h2 class="lab-title"><a href="labs/07-evaluation-and-injection/index.html">Evaluation &amp; Prompt-Injection Testing</a></h2>
+      </div>
+      <p class="lab-desc">Compare prompt variants with a repeatable rubric, then test a defensive prompt against benign adversarial input — and record failures honestly.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-intermediate">INTERMEDIATE</span>
+        <span class="badge badge-duration">⏱️ 15 MIN</span>
+        <span class="badge badge-category-specialized">📂 EVALUATION &amp; SECURITY</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/07-evaluation-and-injection/index.html">Start Lab →</a></div>
+    </article>
+
+    <article class="lab-card">
+      <div class="lab-card-header">
+        <span class="lab-number">8</span>
+        <h2 class="lab-title"><a href="labs/08-capstone/index.html">Capstone: Enterprise Triage Prompt</a></h2>
+      </div>
+      <p class="lab-desc">Combine every technique into one reusable, tested prompt and clear the capstone quality gates.</p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-advanced">INT.–ADVANCED</span>
+        <span class="badge badge-duration">⏱️ TAKE-HOME</span>
+        <span class="badge badge-category-specialized">📂 CAPSTONE</span>
+      </div>
+      <div class="lab-actions"><a class="btn-start" href="labs/08-capstone/index.html">Start Lab →</a></div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="docs/workshop-overview.html">Overview</a>
+      <a href="docs/pre-workshop-setup.html">Setup</a>
+      <a href="docs/facilitator-guide.html">Facilitator Guide</a>
+      <a href="docs/troubleshooting.html">Troubleshooting</a>
+    </div>
+    <p>Last updated: Jul-14-2026 · Synthetic data only · Never enter real keys or private data.</p>
+  </footer>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>

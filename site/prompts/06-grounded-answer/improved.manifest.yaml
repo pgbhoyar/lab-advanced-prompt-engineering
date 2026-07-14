@@ -1,0 +1,20 @@
+id: triage-grounded-improved
+version: 1.0.0
+lab: 06-grounding-and-uncertainty
+variant: improved
+purpose: Answers strictly from supplied policy; uses a defined fallback when unsupported.
+system_prompt: system.md
+user_prompt: improved-user.md
+variables:
+  - request_text
+  - policy_context
+test_set: ../../datasets/triage/edge-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 400
+  store: false
+known_limitations:
+  - Grounding depends on the supplied policy being correct and complete.
+change_notes: >
+  v1.0.0 initial. Adds source-authority rules, forbids outside knowledge, requires a defined
+  fallback for unsupported questions, and separates facts, inferences, and unknowns.
