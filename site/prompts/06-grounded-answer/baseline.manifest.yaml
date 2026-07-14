@@ -1,0 +1,16 @@
+id: triage-grounded-baseline
+version: 1.0.0
+lab: 06-grounding-and-uncertainty
+variant: baseline
+purpose: Answers policy questions without grounding rules — may invent policy.
+user_prompt: user.md
+variables:
+  - request_text
+  - policy_context
+test_set: ../../datasets/triage/edge-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 400
+  store: false
+known_limitations:
+  - No rule restricting answers to the supplied policy; the model may use outside knowledge.

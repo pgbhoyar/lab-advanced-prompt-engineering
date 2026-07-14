@@ -1,0 +1,20 @@
+id: triage-contract-improved
+version: 1.0.0
+lab: 01-explicit-prompt-contract
+variant: improved
+purpose: Explicit prompt contract for triaging an enterprise service request.
+system_prompt: system.md
+user_prompt: improved-user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/core-test-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 800
+  store: false
+known_limitations:
+  - Free-text output; structured JSON is introduced in Lab 04.
+change_notes: >
+  v1.0.0 initial explicit contract. Replaces the vague baseline: adds objective, audience,
+  context, instructions, constraints, a defined output structure, and an uncertainty policy so
+  the response can be evaluated with the standard rubric.

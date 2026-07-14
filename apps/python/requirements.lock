@@ -1,0 +1,6 @@
+# Pinned versions are finalized in T109 after the end-to-end compatibility test (research R-002).
+# Until then, these are the tested lower bounds. Regenerate with:
+#   pip-compile pyproject.toml --output-file requirements.lock
+openai>=1.40
+pydantic>=2.6
+pytest>=8.0

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-Workshop Setup Guide · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Pre-Workshop Setup Guide
+    </nav>
+    <section class="lab-section">
+<h1 id="pre-workshop-setup-guide">Pre-Workshop Setup Guide</h1>
+<p>Complete this <strong>before</strong> the workshop. Everything here uses <strong>synthetic</strong> data and a
+<strong>temporary</strong> workshop key. You can complete every required lab through the portal if you cannot
+run code.</p>
+<h2 id="0-get-the-workshop-files">0. Get the workshop files</h2>
+<p><strong>How you "get" the workshop depends on your track:</strong></p>
+<ul>
+<li><strong>Portal track (no code):</strong> you do <strong>not</strong> need to clone anything. Just open the workshop
+  site in your browser and follow the <strong>Portal</strong> steps in each lab. The site has everything you
+  paste into the Foundry portal. (Your facilitator will share the site link, or open
+  <code>site/index.html</code> if you were given the files.)</li>
+<li><strong>Coding track (Python / C# / Java):</strong> you <strong>do</strong> need the repository locally — the runner
+  loads the shared prompts, datasets, and schemas from it. Clone it (or download the ZIP) and
+  work from the repository root:</li>
+</ul>
+<pre><code>git clone &lt;workshop-repo-url&gt;
+cd lab-advanced-prompt-engineering
+</code></pre>
+<blockquote>
+<p>No Git? Download the repository ZIP from the workshop page and extract it, then open a
+terminal in the extracted folder. Everything else is the same.</p>
+</blockquote>
+<p>You will still receive the <strong>temporary credentials</strong> from the facilitator's controlled channel —
+they are never stored in the repository.</p>
+<h2 id="1-choose-your-track">1. Choose your track</h2>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>You need</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft Foundry portal</td>
+<td>A browser + workshop account</td>
+<td>No local install, no clone</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Python 3.10+, the repo cloned</td>
+<td><code>pip install -e apps/python</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td>.NET SDK 8.0+, the repo cloned</td>
+<td><code>dotnet restore</code> in <code>apps/csharp</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td>JDK 17+, the repo cloned</td>
+<td>Maven Wrapper included</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-get-and-configure-credentials">2. Get and configure credentials</h2>
+<ol>
+<li>Receive the temporary endpoint, deployment name, and key from the facilitator's controlled
+   channel. <strong>Never</strong> paste the key into code, prompts, screenshots, or chat.</li>
+<li>Copy <code>.env.example</code> to <code>.env</code> and fill in the three required values.</li>
+<li>Run the checker (it never prints your key):
+   - Windows: <code>pwsh scripts/setup.ps1</code>
+   - macOS/Linux: <code>bash scripts/setup.sh</code></li>
+</ol>
+<p>Read <a href="credential-safety.html">credential-safety.md</a> before using any key.</p>
+<h2 id="3-verify-your-track">3. Verify your track</h2>
+<ul>
+<li><strong>Python:</strong> <code>python -m workshop_runner check-config</code></li>
+<li><strong>C#:</strong> <code>dotnet run --project apps/csharp/src/WorkshopRunner -- check-config</code></li>
+<li><strong>Java:</strong> <code>./mvnw -q exec:java -Dexec.args="check-config"</code></li>
+<li><strong>Portal:</strong> open the project and confirm you can select the workshop deployment
+  (see <a href="portal-setup.html">portal-setup.md</a>).</li>
+</ul>
+<p>Full per-language commands are in <a href="coding-tracks.html">coding-tracks.md</a>.</p>
+<h2 id="cross-platform-notes">Cross-platform notes</h2>
+<ul>
+<li><strong>Windows:</strong> run <code>pwsh scripts/setup.ps1</code>. Use <code>dotnet</code> / <code>java</code> / <code>python</code> from a terminal.</li>
+<li><strong>macOS / Linux:</strong> run <code>bash scripts/setup.sh</code>. Use <code>python3</code>, <code>dotnet</code>, <code>java</code>.</li>
+<li><strong>Corporate-restricted machines:</strong> if you cannot install packages or run local code, use the
+  <strong>portal</strong> track — every required lab works with no local software. The Java runner core also
+  runs with only the JDK (no Maven) if package downloads are blocked (see
+  <a href="coding-tracks.html">coding-tracks.md</a>).</li>
+</ul>
+<h2 id="4-switching-tracks-mid-workshop-fallback">4. Switching tracks mid-workshop (fallback)</h2>
+<p>If your coding setup breaks at any point, you can switch to the <strong>portal</strong> without losing your
+place:</p>
+<ol>
+<li>Note the <strong>lab number</strong> you are on (e.g. Lab 03).</li>
+<li>Open that lab's <code>portal.md</code>.</li>
+<li>Restart the <strong>same lab</strong> from its beginning using the <strong>same shared prompt and input</strong> — labs
+   are stateless, so no mid-lab progress needs to be preserved.</li>
+<li>This switch is designed to take <strong>under five minutes</strong>.</li>
+</ol>
+<p>The reverse (portal → coding) works the same way. A failure in one track never blocks another.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>See <a href="troubleshooting.html">troubleshooting.md</a> for authentication, dependency, rate-limit, and
+output problems.</p>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

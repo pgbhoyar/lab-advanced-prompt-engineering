@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 03 — Expected Observations · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 03 — Expected Observations
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-03-expected-observations">Lab 03 — Expected Observations</h1>
+<p>Judge by characteristics; responses vary.</p>
+<h2 id="zero-shot-typical-weakness">Zero-shot — typical weakness</h2>
+<ul>
+<li>May label the clicked-link case as <strong>software</strong> (pop-ups) rather than <strong>security</strong> (phishing).</li>
+</ul>
+<h2 id="few-shot-expected-characteristics">Few-shot — expected characteristics</h2>
+<ul>
+<li>Classifies <code>few-shot-boundary-01</code> as <strong>security</strong>, citing the phishing/malware signal.</li>
+<li>Applies the demonstrated pattern to a request that is not identical to any example.</li>
+<li>Does not copy an example's wording verbatim.</li>
+</ul>
+<h2 id="teaching-point">Teaching point</h2>
+<p>Examples must be accurate and internally consistent. An example that contradicts a written rule
+will teach the model the wrong behavior — the improved prompt keeps examples aligned with the
+category definitions.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

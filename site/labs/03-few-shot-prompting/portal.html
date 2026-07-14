@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 03 — Portal Instructions · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 03 — Portal Instructions
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-03-portal-instructions">Lab 03 — Portal Instructions</h1>
+<h2 id="zero-shot-baseline">Zero-shot (baseline)</h2>
+<ol>
+<li>Paste <code>prompts/03-few-shot/system.md</code> into system instructions.</li>
+<li>User message:</li>
+</ol>
+<pre><code>Classify this request:
+I clicked a link in an email and now my browser keeps opening pop-ups and my saved passwords
+page looks different. Should I be worried?
+</code></pre>
+<ol start="3">
+<li>Run. Note the category.</li>
+</ol>
+<h2 id="few-shot-improved">Few-shot (improved)</h2>
+<ol>
+<li>Replace system instructions with <code>prompts/03-few-shot/fewshot-system.md</code> (includes examples).</li>
+<li>Use the <strong>same</strong> user message.</li>
+<li>Run. Expect category <strong>security</strong>.</li>
+</ol>
+<h2 id="fallback">Fallback</h2>
+<p>Switched tracks? Restart here with the same prompt and input.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

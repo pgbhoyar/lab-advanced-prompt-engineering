@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>README · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> / README
+    </nav>
+    <section class="lab-section">
+<h1 id="hands-on-advanced-prompt-engineering">Hands-On: Advanced Prompt Engineering</h1>
+<p>A hands-on workshop that teaches how to design, test, evaluate, and improve prompts as
+<strong>version-controlled engineering assets</strong> — using OpenAI GPT-5.4 in Microsoft Foundry.</p>
+<p>Every required lab can be completed through <strong>four equivalent tracks</strong>:</p>
+<ol>
+<li><strong>Microsoft Foundry portal</strong> (no coding)</li>
+<li><strong>Python</strong></li>
+<li><strong>C#</strong></li>
+<li><strong>Java</strong></li>
+</ol>
+<p>All tracks share the same scenario, prompts, inputs, output contract, test cases, and rubric.</p>
+<blockquote>
+<p><strong>👉 Easiest way to follow the labs:</strong> open the browsable site — <a href="index.html">site/index.html</a> —
+in your web browser. It's a click-through experience with a lab landing page, badges, a table of
+contents, Python/C#/Java code tabs, and Next/Previous navigation. No server needed: just
+double-click the file. (Prefer plain text? Each lab also has a <code>README.md</code>.)</p>
+</blockquote>
+<h2 id="scenario">Scenario</h2>
+<blockquote>
+<p>Build an <strong>Enterprise Service Request Triage Assistant</strong> that reads synthetic IT support
+requests, identifies category and urgency, summarizes the problem, recommends the next
+action, and explains when the available information is insufficient.</p>
+</blockquote>
+<h2 id="getting-started">Getting Started</h2>
+<ol>
+<li>Read <a href="docs/workshop-overview.html">docs/workshop-overview.md</a>.</li>
+<li>Follow <a href="docs/pre-workshop-setup.html">docs/pre-workshop-setup.md</a> (coding tracks) or
+   <a href="docs/portal-setup.html">docs/portal-setup.md</a> (portal track).</li>
+<li>Review <a href="docs/credential-safety.html">docs/credential-safety.md</a> — <strong>read this before using any key</strong>.</li>
+<li>Start with <a href="labs/00-access-and-baseline/README.html">labs/00-access-and-baseline/README.md</a>.</li>
+</ol>
+<h2 id="lab-index">Lab Index</h2>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Technique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="labs/00-access-and-baseline/">00 — Access &amp; Baseline</a></td>
+<td>Environment + unoptimized baseline</td>
+</tr>
+<tr>
+<td><a href="labs/01-explicit-prompt-contract/">01 — Explicit Prompt Contract</a></td>
+<td>Objective, audience, constraints, output</td>
+</tr>
+<tr>
+<td><a href="labs/02-instruction-hierarchy/">02 — Instruction Hierarchy</a></td>
+<td>System/user/data separation + delimiters</td>
+</tr>
+<tr>
+<td><a href="labs/03-few-shot-prompting/">03 — Few-Shot Prompting</a></td>
+<td>Representative examples</td>
+</tr>
+<tr>
+<td><a href="labs/04-structured-output/">04 — Structured Output</a></td>
+<td>Strict JSON schema + validation</td>
+</tr>
+<tr>
+<td><a href="labs/05-prompt-chaining/">05 — Prompt Chaining</a></td>
+<td>Task decomposition + stage validation</td>
+</tr>
+<tr>
+<td><a href="labs/06-grounding-and-uncertainty/">06 — Grounding &amp; Uncertainty</a></td>
+<td>Answer from context, fallback</td>
+</tr>
+<tr>
+<td><a href="labs/07-evaluation-and-injection/">07 — Evaluation &amp; Injection</a></td>
+<td>Rubric comparison + defensive testing</td>
+</tr>
+<tr>
+<td><a href="labs/08-capstone/">08 — Capstone</a></td>
+<td>Reusable enterprise prompt</td>
+</tr>
+</tbody>
+</table>
+<h2 id="repository-layout">Repository Layout</h2>
+<ul>
+<li><code>prompts/</code> — shared prompt manifests + text (source of truth)</li>
+<li><code>datasets/</code> — synthetic triage data and test cases</li>
+<li><code>schemas/</code> — JSON schemas (output, manifest, test case, evaluation result)</li>
+<li><code>rubrics/</code> — evaluation rubric + portal validation checklist</li>
+<li><code>apps/{python,csharp,java}/</code> — thin CLI reference runners</li>
+<li><code>evaluation/</code> — deterministic + optional AI-assisted evaluators (facilitator)</li>
+<li><code>docs/</code> — setup, portal, credential safety, troubleshooting, facilitator guide</li>
+<li><code>solutions/</code> — reference solutions (separate from attendee instructions)</li>
+</ul>
+<h2 id="safety">Safety</h2>
+<p>Temporary keys only, read from environment variables. <strong>Never</strong> commit secrets or enter
+confidential data into prompts. See <a href="SECURITY.html">SECURITY.md</a>.</p>
+<h2 id="license">License</h2>
+<p><a href="LICENSE">MIT</a>.</p>
+    </section>
+  </main>
+  <script src="assets/site.js"></script>
+</body>
+</html>

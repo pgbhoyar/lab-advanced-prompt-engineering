@@ -1,0 +1,27 @@
+[project]
+name = "workshop-runner"
+version = "1.0.0"
+description = "Thin CLI reference runner for the Advanced Prompt Engineering Workshop"
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.40",
+    "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+eval = ["azure-ai-evaluation>=1.0", "azure-identity>=1.16"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "offline: tests that use recorded fixtures and never contact the model",
+    "live: opt-in tests that contact the workshop model",
+]

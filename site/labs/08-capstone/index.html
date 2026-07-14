@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 08 — Capstone · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+      <span style="color:var(--text-muted)">|</span>
+      <a href="../../labs/08-capstone/README.html">Markdown</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 08 — Capstone: Enterprise Triage Prompt
+    </nav>
+
+    <header class="lab-header">
+      <h1>Lab 08 — Capstone: Enterprise Triage Prompt</h1>
+      <span class="updated-label">Last updated: Jul-14-2026</span>
+      <p class="lab-intro">
+        Combine everything you've learned into one <strong>reusable, tested</strong> enterprise
+        triage prompt — and leave the workshop with a practical artifact you can keep improving.
+      </p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-advanced">INT.–ADVANCED</span>
+        <span class="badge badge-duration">⏱️ TAKE-HOME</span>
+        <span class="badge badge-category-specialized">📂 CAPSTONE</span>
+      </div>
+    </header>
+
+    <table class="lab-detail-table">
+      <thead><tr><th>Level</th><th>Persona</th><th>Duration</th><th>Learning objective</th></tr></thead>
+      <tbody><tr>
+        <td>300</td>
+        <td>Anyone (no coding required)</td>
+        <td>Remaining session time (finishable afterward)</td>
+        <td>Build a prompt that produces strict structured output, grounded in a supplied policy, resistant to embedded instructions, with a defined uncertainty policy — and pass the capstone quality gates.</td>
+      </tr></tbody>
+    </table>
+
+    <nav class="lab-toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#why">Why this matters</a></li>
+        <li><a href="#scenario">Scenario</a></li>
+        <li><a href="#concepts">Core concepts</a></li>
+        <li><a href="#prereqs">Prerequisites</a></li>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#exercise">Exercise: build and test your capstone</a></li>
+        <li><a href="#passing">Passing criteria</a></li>
+        <li><a href="#files">Files used in this lab</a></li>
+        <li><a href="#checkpoint">Checkpoint</a></li>
+        <li><a href="#reflection">Test your understanding &amp; reflection</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ol>
+    </nav>
+
+    <section class="lab-section" id="why">
+      <h2>🤔 Why this matters</h2>
+      <p>Individual techniques are useful; combining them into one reliable, versioned prompt is what real work looks like. The capstone proves you can assemble a prompt that is structured, grounded, safe, and honest about uncertainty — all at once.</p>
+    </section>
+
+    <section class="lab-section" id="scenario">
+      <h2>🌐 Scenario</h2>
+      <p>Build one prompt that triages a service request into the strict triage schema, grounded in a supplied policy, resistant to embedded instructions, with a defined uncertainty policy.</p>
+    </section>
+
+    <section class="lab-section" id="concepts">
+      <h2>🎓 Core concepts</h2>
+      <table class="content-table">
+        <thead><tr><th>Concept</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Reusable prompt asset</strong></td><td>A versioned prompt with manifest, text, test set, rubric, and change notes.</td></tr>
+          <tr><td><strong>Quality gate</strong></td><td>A defined bar (schema-valid, grounded, safe, ≥ 14/18) a prompt must clear to ship.</td></tr>
+          <tr><td><strong>Composition</strong></td><td>Layering contract + hierarchy + structured output + grounding + defense in one prompt.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="prereqs">
+      <h2>✅ Prerequisites</h2>
+      <ul>
+        <li><strong>Labs 01, 02, 04, and 06</strong> completed (contract, hierarchy, structured output, grounding). Lab 07 (evaluation) recommended.</li>
+        <li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="requirements">
+      <h2>📐 Requirements</h2>
+      <p>Your prompt must define: prompt id, version, objective, input variables, constraints, output contract, and uncertainty policy. It must:</p>
+      <ul>
+        <li>Produce structured output conforming to <a href="../../schemas/triage-output.schema.json">triage-output.schema.json</a>.</li>
+        <li><strong>Ground</strong> answers in the supplied <code>&lt;policy&gt;</code> with a fallback when unsupported.</li>
+        <li><strong>Separate</strong> instructions from <code>&lt;source_data&gt;</code> (treat it as untrusted).</li>
+        <li>Be tested across normal, ambiguous, missing-information, an edge case (add your own), and adversarial inputs.</li>
+      </ul>
+      <p>Start from the reference prompt (<code>prompts/08-capstone-reference/</code>) or write your own. Keep prompt text in files; never hard-code secrets.</p>
+    </section>
+
+    <section class="lab-section" id="exercise">
+      <h2>🚀 Exercise: build and test your capstone</h2>
+      <div class="usecase-banner">
+        <span>Run the reference (or your prompt) on the capstone cases and score it.</span>
+        <span class="uc-effort">⏱️ take-home</span>
+      </div>
+      <div class="callout callout-note">
+        <span class="callout-label">Where does {{request_text}} come from?</span>
+        <p><code>{{request_text}}</code> is a <strong>placeholder</strong> — you never type it. The runner fills it automatically from the test case you pick with <code>--case</code> (the input data lives in <code>datasets/triage/&hellip;</code>). Your job is just to choose <code>--lab</code>, <code>--case</code>, and <code>--variant</code>; to use different input, pick another <code>--case</code>. <a href="../../docs/coding-tracks.html">How the coding tracks work &rarr;</a></p>
+      </div>
+      <ol class="step-list">
+        <li>Run the reference (or your prompt) on the capstone cases:
+          <div class="code-tabs">
+            <span class="code-tabs-label">Run capstone</span>
+            <div class="code-tab-buttons" role="tablist" aria-label="Programming language">
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="true" data-lang="python">Python</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="csharp">C#</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="java">Java</button>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="python">
+<pre><code>python -m workshop_runner run --lab 08-capstone --case cap-normal-01 --variant reference
+python -m workshop_runner run --lab 08-capstone --case cap-adversarial-01 --variant reference</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="csharp" hidden>
+<pre><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 08-capstone --case cap-normal-01 --variant reference</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="java" hidden>
+<pre><code>./mvnw -q exec:java -Dexec.args="run --lab 08-capstone --case cap-normal-01 --variant reference"</code></pre>
+            </div>
+          </div>
+        </li>
+        <li>Run all four cases (<code>cap-normal-01</code>, <code>cap-ambiguous-01</code>, <code>cap-missing-01</code>, <code>cap-adversarial-01</code>) and add one edge case of your own. Structured output is validated automatically on coding tracks.</li>
+        <li>Score with the <a href="../../rubrics/capstone-rubric.html">capstone rubric</a>.</li>
+      </ol>
+      <div class="callout callout-tip">
+        <span class="callout-label">Portal track</span>
+        <p>Follow the <a href="../../labs/08-capstone/portal.html">Portal instructions</a> to assemble and validate the prompt by hand.</p>
+      </div>
+      <p class="congrats">🏅 Congratulations! You built a reusable, tested enterprise prompt.</p>
+    </section>
+
+    <section class="lab-section" id="passing">
+      <h2>🎯 Passing criteria</h2>
+      <p>See the <a href="../../rubrics/capstone-rubric.html">capstone rubric</a>: valid manifest and response contract, all five categories executed, no schema failure, no security-boundary failure, no fabricated action, <strong>≥ 14/18</strong>, and no zero on groundedness, format, or safety.</p>
+    </section>
+
+    <section class="lab-section" id="files">
+      <h2>📁 Files used in this lab</h2>
+      <p>Everything this lab runs on is a shared, editable file &mdash; no code required. The runner loads these by <code>--lab</code> and <code>--case</code>; edit any prompt file and all tracks (and the portal) pick up the change.</p>
+      <table class="content-table">
+        <thead><tr><th>File</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../../prompts/08-capstone-reference/reference.manifest.yaml"><code>prompts/08-capstone-reference/reference.manifest.yaml</code></a></td><td>Reference prompt manifest (declares variables, test set, model settings)</td></tr>
+          <tr><td><a href="../../prompts/08-capstone-reference/system.html"><code>prompts/08-capstone-reference/system.md</code></a></td><td>Reference system instructions</td></tr>
+          <tr><td><a href="../../prompts/08-capstone-reference/user.html"><code>prompts/08-capstone-reference/user.md</code></a></td><td>Reference user message</td></tr>
+          <tr><td><a href="../../schemas/triage-output.schema.json"><code>schemas/triage-output.schema.json</code></a></td><td>Output JSON schema (strict contract)</td></tr>
+          <tr><td><a href="../../datasets/triage/capstone-cases.jsonl"><code>datasets/triage/capstone-cases.jsonl</code></a></td><td>Test cases that fill the prompt placeholders</td></tr>
+          <tr><td><a href="../../datasets/triage/policy-context.html"><code>datasets/triage/policy-context.md</code></a></td><td>Synthetic grounding policy source</td></tr>
+          <tr><td><a href="../../rubrics/standard-rubric.html"><code>rubrics/standard-rubric.md</code></a></td><td>Scoring rubric used to compare prompts</td></tr>
+          <tr><td><a href="../../rubrics/capstone-rubric.html"><code>rubrics/capstone-rubric.md</code></a></td><td>Capstone passing criteria</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="checkpoint">
+      <h2>🏅 Checkpoint</h2>
+      <ul>
+        <li>Your prompt passes the four provided cases (structured, grounded, injection-resistant).</li>
+        <li>You can name which workshop technique each part of your prompt applies.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="reflection">
+      <h2>🤔 Test your understanding &amp; reflection</h2>
+      <ul>
+        <li>Which technique was hardest to combine with the others, and why?</li>
+        <li>If you had one more revision, what failure would you target first?</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="troubleshooting">
+      <h2>🧭 Troubleshooting</h2>
+      <ul>
+        <li>Schema failures → check field names/enums against the triage schema.</li>
+        <li>Coding blocked? Use the <a href="../../labs/08-capstone/portal.html">Portal steps</a>.</li>
+        <li>Didn't finish? The reference prompt, test set, and rubric stay in the repo — continue with <a href="../../docs/post-workshop-next-steps.html">post-workshop next steps</a>.</li>
+      </ul>
+      <p>Optional challenge: <a href="../../labs/08-capstone/challenge.html">challenge.md</a>.</p>
+    </section>
+
+    <nav class="lab-nav" aria-label="Lab navigation">
+      <a href="../07-evaluation-and-injection/index.html">
+        <span class="nav-label">←  Previous lab</span>
+        <span class="nav-title">Lab 07 — Evaluation &amp; Injection</span>
+      </a>
+      <a class="nav-next" href="../../index.html">
+        <span class="nav-label">Finish  →</span>
+        <span class="nav-title">Back to all labs</span>
+      </a>
+    </nav>
+  </main>
+
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Troubleshooting
+    </nav>
+    <section class="lab-section">
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p>Common setup, authentication, dependency, rate-limit, schema, and output problems.</p>
+<h2 id="setup-configuration">Setup &amp; configuration</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Missing required environment variable(s)</code></td>
+<td>Copy <code>.env.example</code> to <code>.env</code> and fill the three required values. Run <code>scripts/setup.ps1</code> / <code>setup.sh</code>.</td>
+</tr>
+<tr>
+<td><code>BASE_URL must use https://</code></td>
+<td>Ensure the endpoint starts with <code>https://</code>.</td>
+</tr>
+<tr>
+<td><code>BASE_URL must end in /openai/v1/</code></td>
+<td>Append <code>/openai/v1/</code> to the resource endpoint.</td>
+</tr>
+<tr>
+<td><code>... still contains a placeholder</code></td>
+<td>You pasted the <code>&lt;...&gt;</code> placeholder; paste the real key.</td>
+</tr>
+<tr>
+<td><code>No module named workshop_runner</code></td>
+<td><code>python -m pip install -e apps/python</code> from the repo root.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="authentication">Authentication</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Authentication failed</code> (401/403)</td>
+<td>Key is wrong or expired. Re-copy it (watch for trailing spaces). Keys may be rotated after the workshop.</td>
+</tr>
+<tr>
+<td><code>Deployment not found</code> (404)</td>
+<td><code>AZURE_OPENAI_DEPLOYMENT</code> must be the <strong>deployment name</strong>, which may differ from "GPT-5.4".</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dependencies-runtime">Dependencies / runtime</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cannot install packages / corporate restrictions</td>
+<td>Use the <strong>portal</strong> track — every required lab works with no local code.</td>
+</tr>
+<tr>
+<td>Wrong Python/.NET/JDK version</td>
+<td>Python 3.10+, .NET 8+, JDK 17+. If unavailable, use the portal.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rate-limits-slow-responses">Rate limits &amp; slow responses</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>429</code> / rate limited</td>
+<td>The runner retries with backoff. Wait a moment; the facilitator may stagger exercises.</td>
+</tr>
+<tr>
+<td>Very slow response</td>
+<td>Reasoning effort is already <code>low</code> and tokens are bounded. Use the facilitator's pre-run example or the <code>offline-fallback/</code> pack.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="structured-output-schema">Structured output / schema</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VALIDATION: FAIL — Unexpected field</code></td>
+<td>The model added a key not in the contract. Rely on schema-enforced mode or tighten the instruction.</td>
+</tr>
+<tr>
+<td><code>VALIDATION: FAIL — invalid value</code></td>
+<td>An enum value is out of range (e.g. <code>urgency: urgent</code>).</td>
+</tr>
+<tr>
+<td>Portal has no schema option</td>
+<td>Request the schema in the prompt and validate with <code>rubrics/structured-output-checklist.md</code>.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="output-variance">Output variance</h2>
+<p>Model responses vary between runs. Judge by required <strong>characteristics</strong>, not exact text. When
+assessing consistency, run more than once and record variation rather than keeping only the best
+result.</p>
+<h2 id="switching-tracks">Switching tracks</h2>
+<p>If a coding track breaks, switch to the portal at the <strong>same lab number</strong> using the same prompt
+and input (see <a href="pre-workshop-setup.html">pre-workshop-setup.md</a> §4). Target: under five minutes.</p>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

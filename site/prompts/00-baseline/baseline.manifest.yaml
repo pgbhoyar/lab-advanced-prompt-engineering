@@ -1,0 +1,16 @@
+id: triage-baseline
+version: 1.0.0
+lab: 00-access-and-baseline
+variant: baseline
+purpose: Unoptimized starter prompt used to capture a baseline triage response.
+user_prompt: user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/starter-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 800
+  store: false
+known_limitations:
+  - Vague instructions; output structure and urgency criteria are undefined.
+  - No handling defined for missing information.

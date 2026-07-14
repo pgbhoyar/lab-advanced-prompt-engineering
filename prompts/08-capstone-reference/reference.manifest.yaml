@@ -1,0 +1,24 @@
+id: triage-capstone-reference
+version: 1.0.0
+lab: 08-capstone
+variant: reference
+purpose: Reference reusable enterprise triage prompt combining the workshop techniques.
+system_prompt: system.md
+user_prompt: user.md
+variables:
+  - request_id
+  - request_text
+  - policy_context
+output_schema: ../../schemas/triage-output.schema.json
+test_set: ../../datasets/triage/capstone-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 800
+  store: false
+known_limitations:
+  - Category/urgency may need human review when evidence conflicts or a security signal appears.
+  - Grounding depends on the supplied policy being correct and complete.
+change_notes: >
+  v1.0.0 reference capstone. Combines explicit contract, instruction/data separation with
+  delimiters, strict structured output, grounding with an insufficient-information fallback, and
+  injection-resistant scope rules.

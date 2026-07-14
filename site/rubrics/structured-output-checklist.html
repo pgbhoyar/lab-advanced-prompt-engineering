@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Structured Output Validation Checklist (Portal Track) · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Structured Output Validation Checklist (Portal Track)
+    </nav>
+    <section class="lab-section">
+<h1 id="structured-output-validation-checklist-portal-track">Structured Output Validation Checklist (Portal Track)</h1>
+<p>Use this checklist to validate a triage JSON response by hand — the no-code equivalent of the
+coding tracks' automatic schema validation.</p>
+<p>Paste the model's response and check each item. <strong>All must pass.</strong> If any fails, the response is
+a <strong>failed</strong> structured output even if it reads well.</p>
+<h2 id="structure">Structure</h2>
+<ul>
+<li>[ ] The response is a <strong>single JSON object</strong> — nothing before or after it (no prose, no code fences with commentary).</li>
+<li>[ ] The root is an object <code>{ ... }</code>, not an array or string.</li>
+</ul>
+<h2 id="required-fields-all-nine-present">Required fields (all nine present)</h2>
+<ul>
+<li>[ ] <code>request_id</code></li>
+<li>[ ] <code>summary</code></li>
+<li>[ ] <code>category</code></li>
+<li>[ ] <code>urgency</code></li>
+<li>[ ] <code>recommended_action</code></li>
+<li>[ ] <code>missing_information</code></li>
+<li>[ ] <code>evidence</code></li>
+<li>[ ] <code>confidence</code></li>
+<li>[ ] <code>needs_human_review</code></li>
+</ul>
+<h2 id="field-values">Field values</h2>
+<ul>
+<li>[ ] <code>category</code> is one of: <code>access</code>, <code>hardware</code>, <code>software</code>, <code>network</code>, <code>security</code>, <code>other</code></li>
+<li>[ ] <code>urgency</code> is one of: <code>low</code>, <code>medium</code>, <code>high</code>, <code>critical</code></li>
+<li>[ ] <code>confidence</code> is one of: <code>low</code>, <code>medium</code>, <code>high</code></li>
+<li>[ ] <code>needs_human_review</code> is <code>true</code> or <code>false</code> (a boolean, not text)</li>
+<li>[ ] <code>missing_information</code> is an array (<code>[]</code> when nothing is missing)</li>
+<li>[ ] <code>evidence</code> is an array (<code>[]</code> when there is no supporting evidence)</li>
+<li>[ ] <code>request_id</code> matches the request ID you supplied (not invented)</li>
+</ul>
+<h2 id="behavior">Behavior</h2>
+<ul>
+<li>[ ] No fields appear that are <strong>not</strong> in the list above (no extra keys).</li>
+<li>[ ] When information was missing, <code>missing_information</code> lists it and <code>needs_human_review</code> is <code>true</code>.</li>
+<li>[ ] <code>recommended_action</code> does <strong>not</strong> claim an action was already performed.</li>
+<li>[ ] No credential, system instruction, or configuration appears anywhere in the output.</li>
+</ul>
+<p><strong>Result:</strong> PASS only if every box is checked. Otherwise FAIL — record which item failed.</p>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

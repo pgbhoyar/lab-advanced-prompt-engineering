@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 08 — Capstone: Enterprise Triage Prompt · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 08 — Capstone: Enterprise Triage Prompt
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-08-capstone-enterprise-triage-prompt">Lab 08 — Capstone: Enterprise Triage Prompt</h1>
+<p><strong>Last updated: Jul-14-2026</strong></p>
+<p>Combine everything you've learned into one <strong>reusable, tested</strong> enterprise triage prompt — and
+leave the workshop with a practical artifact you can keep improving.</p>
+<p><code>INTERMEDIATE–ADVANCED</code> · ⏱️ REMAINING TIME (finishable afterward) · 📂 CAPSTONE</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Persona</th>
+<th>Duration</th>
+<th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>300</td>
+<td>Anyone (no coding required)</td>
+<td>Remaining session time</td>
+<td>Build a prompt that produces strict structured output, grounded in a supplied policy, resistant to embedded instructions, with a defined uncertainty policy — and pass the capstone quality gates.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">📋 Contents</h2>
+<ol>
+<li><a href="#-why-this-matters">Why this matters</a></li>
+<li><a href="#-scenario">Scenario</a></li>
+<li><a href="#-core-concepts">Core concepts</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+<li><a href="#-what-youll-accomplish">What you'll accomplish</a></li>
+<li><a href="#-requirements">Requirements</a></li>
+<li><a href="#-exercise-build-and-test-your-capstone">Exercise: Build and test your capstone</a></li>
+<li><a href="#-passing-criteria">Passing criteria</a></li>
+<li><a href="#-checkpoint">Checkpoint</a></li>
+<li><a href="#-test-your-understanding--reflection">Test your understanding &amp; reflection</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+<li><a href="#-optional-challenge">Optional challenge</a></li>
+<li><a href="#-summary">Summary</a></li>
+</ol>
+<h2 id="why-this-matters">🤔 Why this matters</h2>
+<p>Individual techniques are useful; combining them into one reliable, versioned prompt is what
+real work looks like. The capstone proves you can assemble a prompt that is structured, grounded,
+safe, and honest about uncertainty — all at once.</p>
+<h2 id="scenario">🌐 Scenario</h2>
+<p>Build one prompt that triages a service request into the strict triage schema, grounded in a
+supplied policy, resistant to embedded instructions, with a defined uncertainty policy.</p>
+<h2 id="core-concepts">🎓 Core concepts</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reusable prompt asset</strong></td>
+<td>A versioned prompt with manifest, text, test set, rubric, and change notes.</td>
+</tr>
+<tr>
+<td><strong>Quality gate</strong></td>
+<td>A defined bar (schema-valid, grounded, safe, ≥ 14/18) a prompt must clear to ship.</td>
+</tr>
+<tr>
+<td><strong>Composition</strong></td>
+<td>Layering contract + hierarchy + structured output + grounding + defense in one prompt.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">✅ Prerequisites</h2>
+<ul>
+<li><strong>Labs 01, 02, 04, and 06</strong> completed (contract, hierarchy, structured output, grounding).
+  Lab 07 (evaluation) recommended.</li>
+<li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+</ul>
+<h2 id="what-youll-accomplish">🎯 What you'll accomplish</h2>
+<ul>
+<li>Create (or start) a reusable triage prompt that passes the four provided capstone cases.</li>
+<li>Explain which workshop technique each part of your prompt applies.</li>
+</ul>
+<h2 id="requirements">📐 Requirements</h2>
+<p>Your prompt must define: prompt id, version, objective, input variables, constraints, output
+contract, and uncertainty policy. It must:</p>
+<ul>
+<li>Produce structured output conforming to
+  <a href="../../schemas/triage-output.schema.json"><code>schemas/triage-output.schema.json</code></a>.</li>
+<li><strong>Ground</strong> answers in the supplied <code>&lt;policy&gt;</code> with a fallback when unsupported.</li>
+<li><strong>Separate</strong> instructions from <code>&lt;source_data&gt;</code> (treat it as untrusted).</li>
+<li>Be tested across normal, ambiguous, missing-information, an edge case (add your own), and
+  adversarial inputs.</li>
+</ul>
+<p>Start from the reference prompt (<code>prompts/08-capstone-reference/</code>) or write your own. Keep prompt
+text in files; never hard-code secrets.</p>
+<h2 id="exercise-build-and-test-your-capstone">🚀 Exercise: Build and test your capstone</h2>
+<p><strong>Summary of tasks:</strong> build the prompt, run the capstone cases, and score against the capstone
+rubric.</p>
+<h3 id="step-by-step-instructions">Step-by-step instructions</h3>
+<ol>
+<li>Run the reference (or your prompt) on the capstone cases:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 08-capstone --case cap-normal-01 --variant reference</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 08-capstone --case cap-adversarial-01 --variant reference</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 08-capstone --case cap-normal-01 --variant reference"</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>See <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>Run all four cases (<code>cap-normal-01</code>, <code>cap-ambiguous-01</code>, <code>cap-missing-01</code>,
+   <code>cap-adversarial-01</code>) and add one edge case of your own. Structured output is validated
+   automatically on coding tracks.</li>
+<li>Score with the <a href="../../rubrics/capstone-rubric.html">capstone rubric</a>.</li>
+</ol>
+<p>🏅 <strong>Congratulations!</strong> You built a reusable, tested enterprise prompt.</p>
+<h2 id="passing-criteria">🎯 Passing criteria</h2>
+<p>See the <a href="../../rubrics/capstone-rubric.html">capstone rubric</a>: valid manifest and response contract,
+all five categories executed, no schema failure, no security-boundary failure, no fabricated
+action, <strong>≥ 14/18</strong>, and no zero on groundedness, format, or safety.</p>
+<h2 id="checkpoint">🏅 Checkpoint</h2>
+<ul>
+<li>[ ] Your prompt passes the four provided cases (structured, grounded, injection-resistant).</li>
+<li>[ ] You can name which workshop technique each part of your prompt applies.</li>
+</ul>
+<h2 id="test-your-understanding-reflection">🤔 Test your understanding &amp; reflection</h2>
+<ol>
+<li>Which technique was hardest to combine with the others, and why?</li>
+<li>If you had one more revision, what failure would you target first?</li>
+</ol>
+<h2 id="troubleshooting">🧭 Troubleshooting</h2>
+<ul>
+<li>Schema failures → check field names/enums against the triage schema.</li>
+<li>Coding blocked? Use <a href="portal.html">portal.md</a>.</li>
+<li>Didn't finish? The reference prompt, test set, and rubric stay in the repo — continue after the
+  session using <a href="../../docs/post-workshop-next-steps.html">../../docs/post-workshop-next-steps.md</a>.</li>
+</ul>
+<h2 id="optional-challenge">🏆 Optional challenge</h2>
+<p>See <a href="challenge.html">challenge.md</a>. Optional.</p>
+<h2 id="summary">📖 Summary</h2>
+<p>You assembled a structured, grounded, safe, uncertainty-aware prompt and measured it against a
+quality gate — a reusable asset and a complete picture of enterprise prompt engineering.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONTRIBUTING · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> / CONTRIBUTING
+    </nav>
+    <section class="lab-section">
+<h1 id="contributing">Contributing</h1>
+<p>Thank you for improving the Advanced Prompt Engineering Workshop.</p>
+<h2 id="principles">Principles</h2>
+<p>This repository follows the workshop constitution
+(<a href=".specify/memory/constitution.html">.specify/memory/constitution.md</a>). All contributions
+MUST comply with it. Key rules:</p>
+<ul>
+<li><strong>Shared assets are the source of truth.</strong> Prompts, datasets, schemas, and rubrics live in
+  <code>prompts/</code>, <code>datasets/</code>, <code>schemas/</code>, and <code>rubrics/</code>. Do <strong>not</strong> copy prompt content into a
+  language project — all tracks load the shared files.</li>
+<li><strong>Parity.</strong> Portal, Python, C#, and Java tracks must teach the same technique with the same
+  scenario, inputs, output contract, test cases, and rubric.</li>
+<li><strong>No secrets.</strong> Never commit credentials. Use <code>.env</code> (ignored) and <code>.env.example</code>
+  (placeholders only).</li>
+<li><strong>Synthetic data only.</strong> No real customer, employee, or company data.</li>
+<li><strong>Evaluation-driven.</strong> Prompt changes must reference a failure mode or evaluation result and
+  update the prompt version + change notes.</li>
+</ul>
+<h2 id="before-opening-a-pr">Before opening a PR</h2>
+<ol>
+<li>Run the validators: <code>python scripts/validate-schemas.py</code>, <code>python scripts/validate-content.py</code>,
+   <code>python scripts/validate-parity.py</code>.</li>
+<li>Run offline tests for any coding track you changed.</li>
+<li>Confirm no secret patterns are present.</li>
+</ol>
+<h2 id="prompt-changes">Prompt changes</h2>
+<p>Increment the prompt <code>version</code> (semver) and add <code>change_notes</code> describing what changed, why,
+which failure motivated it, which tests ran, and whether scores improved.</p>
+    </section>
+  </main>
+  <script src="assets/site.js"></script>
+</body>
+</html>

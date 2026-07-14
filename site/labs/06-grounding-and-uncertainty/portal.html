@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 06 — Portal Instructions · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 06 — Portal Instructions
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-06-portal-instructions">Lab 06 — Portal Instructions</h1>
+<h2 id="baseline">Baseline</h2>
+<ol>
+<li>Clear system instructions.</li>
+<li>User message:</li>
+</ol>
+<pre><code>Policy: (paste the relevant lines from datasets/triage/policy-context.md)
+
+Question: What is the VPN data cap per month?
+
+Answer the question.
+</code></pre>
+<ol start="3">
+<li>Run. Note whether it invents a data cap.</li>
+</ol>
+<h2 id="improved">Improved</h2>
+<ol>
+<li>Paste <code>prompts/06-grounded-answer/system.md</code> into system instructions.</li>
+<li>User message:</li>
+</ol>
+<pre><code>&lt;policy&gt;
+(paste the relevant policy lines)
+&lt;/policy&gt;
+
+Question: What is the VPN data cap per month?
+</code></pre>
+<ol start="3">
+<li>Run. Expect the fallback:
+   "The provided information is insufficient to answer this question."</li>
+</ol>
+<h2 id="try-the-supported-and-inference-cases">Try the supported and inference cases</h2>
+<ul>
+<li>Supported: "How long can I keep access to a shared mailbox before I need to re-request it?"
+  (policy P1 → 90 days).</li>
+<li>Inference: a four-user shared-drive problem vs the policy's "&gt;10 users" threshold — the model
+  should label any escalation as an inference.</li>
+</ul>
+<h2 id="fallback">Fallback</h2>
+<p>Switched tracks? Restart here with the same prompt and input.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

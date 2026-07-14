@@ -1,0 +1,17 @@
+id: triage-structured-baseline
+version: 1.0.0
+lab: 04-structured-output
+variant: baseline
+purpose: Asks for "JSON" loosely, without a strict schema.
+system_prompt: system.md
+user_prompt: user.md
+variables:
+  - request_id
+  - request_text
+test_set: ../../datasets/triage/core-test-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 600
+  store: false
+known_limitations:
+  - '"JSON-like" output may include extra prose, wrong field names, or invalid enums.'

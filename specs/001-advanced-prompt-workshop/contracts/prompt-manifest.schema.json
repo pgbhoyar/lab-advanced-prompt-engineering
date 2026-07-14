@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://workshop.local/schemas/prompt-manifest.schema.json",
+  "title": "Prompt Manifest",
+  "description": "Metadata and file references for a reusable workshop prompt or prompt-chain stage.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "version", "lab", "variant", "purpose", "user_prompt", "variables", "model"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique prompt identifier.",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the prompt asset.",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "lab": {
+      "type": "string",
+      "description": "Lab identifier this prompt belongs to (e.g. 01-explicit-contract).",
+      "minLength": 1
+    },
+    "variant": {
+      "type": "string",
+      "description": "Which comparison variant this prompt represents.",
+      "enum": ["baseline", "improved", "stage", "reference"]
+    },
+    "purpose": {
+      "type": "string",
+      "description": "One-line description of what the prompt accomplishes.",
+      "minLength": 1,
+      "maxLength": 300
+    },
+    "system_prompt": {
+      "type": "string",
+      "description": "Relative path to the system/developer prompt Markdown file. Optional for baseline-only prompts."
+    },
+    "user_prompt": {
+      "type": "string",
+      "description": "Relative path to the user prompt Markdown file.",
+      "minLength": 1
+    },
+    "variables": {
+      "type": "array",
+      "description": "Declared template variables. Every declared variable MUST appear in a prompt file, and every placeholder in a prompt file MUST be declared here.",
+      "items": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+      "uniqueItems": true
+    },
+    "output_schema": {
+      "type": "string",
+      "description": "Relative path to the JSON Schema for structured output. REQUIRED for structured-output prompts."
+    },
+    "test_set": {
+      "type": "string",
+      "description": "Relative path to the JSON Lines test set. REQUIRED for every production (improved/reference) variant."
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reasoning_effort", "max_output_tokens", "store"],
+      "description": "Supported GPT-5.4 settings only. Unsupported sampling parameters (temperature, top_p, presence_penalty, frequency_penalty) MUST NOT appear.",
+      "properties": {
+        "reasoning_effort": { "type": "string", "enum": ["low", "medium", "high"] },
+        "max_output_tokens": { "type": "integer", "minimum": 1, "maximum": 4000 },
+        "store": { "type": "boolean" }
+      }
+    },
+    "known_limitations": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "change_notes": {
+      "type": "string",
+      "description": "REQUIRED when version increments from a prior published version. Describes what/why/motivating failure/tests run/score delta."
+    }
+  }
+}

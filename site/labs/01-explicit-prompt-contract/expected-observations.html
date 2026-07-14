@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 01 — Expected Observations · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 01 — Expected Observations
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-01-expected-observations">Lab 01 — Expected Observations</h1>
+<p>Judge by <em>characteristics</em>, not exact wording. Responses vary between runs.</p>
+<h2 id="baseline-vague-typical-weaknesses">Baseline (vague) — typical weaknesses</h2>
+<ul>
+<li>Interprets "better" inconsistently (rewrites the message, or replies conversationally).</li>
+<li>No fixed category/urgency vocabulary.</li>
+<li>No structured output; missing-information handling undefined.</li>
+</ul>
+<h2 id="improved-explicit-contract-expected-characteristics">Improved (explicit contract) — expected characteristics</h2>
+<ul>
+<li>Uses the labeled output structure (Summary / Category / Urgency / Recommended action /
+  Missing information / Needs human review).</li>
+<li>Category from the allowed set; urgency reflects impact.</li>
+<li>On <code>normal-01</code> (5-year-old laptop): category <strong>hardware</strong>, a concrete next action, low/medium
+  urgency, "Needs human review: no" (or yes if it notes a missing detail).</li>
+<li>On <code>missing-information-01</code>: lists what is missing and sets "Needs human review: yes".</li>
+</ul>
+<h2 id="rubric-expectation">Rubric expectation</h2>
+<p>Improved should score higher on instruction adherence, completeness, and output-format
+compliance while remaining grounded (no invented policy or IDs).</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

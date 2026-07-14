@@ -1,0 +1,19 @@
+id: triage-fewshot-improved
+version: 1.0.0
+lab: 03-few-shot-prompting
+variant: improved
+purpose: Few-shot classification using representative, consistent examples incl. a boundary case.
+system_prompt: fewshot-system.md
+user_prompt: user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/edge-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 400
+  store: false
+known_limitations:
+  - Examples must remain accurate and consistent; a wrong example teaches wrong behavior.
+change_notes: >
+  v1.0.0 initial. Adds three representative examples covering multiple categories and one
+  boundary case (phishing link -> security, not software) to clarify ambiguous boundaries.

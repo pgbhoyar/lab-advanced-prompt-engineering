@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 06 — Grounding &amp; Uncertainty · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+      <span style="color:var(--text-muted)">|</span>
+      <a href="../../labs/06-grounding-and-uncertainty/README.html">Markdown</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 06 — Grounding and Uncertainty
+    </nav>
+
+    <header class="lab-header">
+      <h1>Lab 06 — Grounding and Uncertainty</h1>
+      <span class="updated-label">Last updated: Jul-14-2026</span>
+      <p class="lab-intro">
+        Make the model answer <strong>only from supplied context</strong> and acknowledge when it
+        can't — so it never invents enterprise rules, numbers, or citations.
+      </p>
+      <div class="lab-meta">
+        <span class="badge badge-difficulty-intermediate">INTERMEDIATE</span>
+        <span class="badge badge-duration">⏱️ 12 MIN</span>
+        <span class="badge badge-category-core">📂 GROUNDING &amp; UNCERTAINTY</span>
+      </div>
+    </header>
+
+    <table class="lab-detail-table">
+      <thead><tr><th>Level</th><th>Persona</th><th>Duration</th><th>Learning objective</th></tr></thead>
+      <tbody><tr>
+        <td>300</td>
+        <td>Anyone (no coding required)</td>
+        <td>12 minutes</td>
+        <td>Answer supported questions from a synthetic policy, return a defined fallback for unsupported questions, and clearly label inferences versus stated facts.</td>
+      </tr></tbody>
+    </table>
+
+    <nav class="lab-toc" aria-label="Table of contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#why">Why this matters</a></li>
+        <li><a href="#scenario">Scenario</a></li>
+        <li><a href="#concepts">Core concepts</a></li>
+        <li><a href="#prereqs">Prerequisites</a></li>
+        <li><a href="#targets">What you'll accomplish</a></li>
+        <li><a href="#observe">Exercise: observe the ungrounded baseline</a></li>
+        <li><a href="#improve">Exercise: ground and add a fallback</a></li>
+        <li><a href="#files">Files used in this lab</a></li>
+        <li><a href="#checkpoint">Checkpoint</a></li>
+        <li><a href="#reflection">Test your understanding &amp; reflection</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ol>
+    </nav>
+
+    <section class="lab-section" id="why">
+      <h2>🤔 Why this matters</h2>
+      <p>An assistant that invents a policy number is worse than one that says "I don't know." Grounding and explicit uncertainty handling are what make an enterprise assistant <strong>trustworthy</strong>.</p>
+    </section>
+
+    <section class="lab-section" id="scenario">
+      <h2>🌐 Scenario</h2>
+      <p>You answer IT service-policy questions using only the synthetic <a href="../../datasets/triage/policy-context.html">policy-context.md</a>. Some questions are answered by the policy; some are not; some conflict.</p>
+    </section>
+
+    <section class="lab-section" id="concepts">
+      <h2>🎓 Core concepts</h2>
+      <table class="content-table">
+        <thead><tr><th>Concept</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Grounding</strong></td><td>Basing answers only on supplied source material.</td></tr>
+          <tr><td><strong>Fallback</strong></td><td>The defined response when the source cannot answer ("The provided information is insufficient…").</td></tr>
+          <tr><td><strong>Inference</strong></td><td>A reasonable conclusion not directly stated — it must be labeled as such, never presented as policy fact.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="prereqs">
+      <h2>✅ Prerequisites</h2>
+      <ul>
+        <li><strong>Lab 01</strong> completed.</li>
+        <li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="targets">
+      <h2>🎯 What you'll accomplish</h2>
+      <ul>
+        <li>Answer a supported question with policy evidence.</li>
+        <li>Return the required fallback for an unsupported question.</li>
+        <li>Distinguish facts, inferences, and unknowns.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="observe">
+      <h2>🚀 Exercise: observe the ungrounded baseline</h2>
+      <div class="usecase-banner">
+        <span>Run the baseline on <code>grounding-unsupported-01</code> and note whether it invents a number.</span>
+        <span class="uc-effort">⏱️ 4 min</span>
+      </div>
+      <div class="callout callout-note">
+        <span class="callout-label">Where does {{request_text}} come from?</span>
+        <p><code>{{request_text}}</code> is a <strong>placeholder</strong> — you never type it. The runner fills it automatically from the test case you pick with <code>--case</code> (the input data lives in <code>datasets/triage/&hellip;</code>). Your job is just to choose <code>--lab</code>, <code>--case</code>, and <code>--variant</code>; to use different input, pick another <code>--case</code>. <a href="../../docs/coding-tracks.html">How the coding tracks work &rarr;</a></p>
+      </div>
+      <ol class="step-list">
+        <li>Run the <strong>baseline</strong> variant:
+          <div class="code-tabs">
+            <span class="code-tabs-label">Run baseline</span>
+            <div class="code-tab-buttons" role="tablist" aria-label="Programming language">
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="true" data-lang="python">Python</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="csharp">C#</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="java">Java</button>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="python">
+<pre><code>python -m workshop_runner run --lab 06-grounding-and-uncertainty --case grounding-unsupported-01 --variant baseline</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="csharp" hidden>
+<pre><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 06-grounding-and-uncertainty --case grounding-unsupported-01 --variant baseline</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="java" hidden>
+<pre><code>./mvnw -q exec:java -Dexec.args="run --lab 06-grounding-and-uncertainty --case grounding-unsupported-01 --variant baseline"</code></pre>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <div class="callout callout-tip">
+        <span class="callout-label">Portal track</span>
+        <p>Follow the <a href="../../labs/06-grounding-and-uncertainty/portal.html">Portal instructions</a>.</p>
+      </div>
+    </section>
+
+    <section class="lab-section" id="improve">
+      <h2>🔧 Exercise: ground and add a fallback</h2>
+      <div class="usecase-banner">
+        <span>Run the improved variant — answers restricted to the policy, with a required fallback.</span>
+        <span class="uc-effort">⏱️ 8 min</span>
+      </div>
+      <ol class="step-list">
+        <li>Run the <strong>improved</strong> variant on the same case. Expect the exact fallback: <em>"The provided information is insufficient to answer this question."</em>
+          <div class="code-tabs">
+            <span class="code-tabs-label">Run improved</span>
+            <div class="code-tab-buttons" role="tablist" aria-label="Programming language">
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="true" data-lang="python">Python</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="csharp">C#</button>
+              <button type="button" class="code-tab-btn" role="tab" aria-selected="false" data-lang="java">Java</button>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="python">
+<pre><code>python -m workshop_runner run --lab 06-grounding-and-uncertainty --case grounding-unsupported-01 --variant improved</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="csharp" hidden>
+<pre><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 06-grounding-and-uncertainty --case grounding-unsupported-01 --variant improved</code></pre>
+            </div>
+            <div class="code-tab-panel" role="tabpanel" data-lang="java" hidden>
+<pre><code>./mvnw -q exec:java -Dexec.args="run --lab 06-grounding-and-uncertainty --case grounding-unsupported-01 --variant improved"</code></pre>
+            </div>
+          </div>
+        </li>
+        <li>Also try <code>grounding-supported-01</code> (answers <strong>90 days</strong> with policy evidence) and <code>grounding-inference-01</code> (labels an escalation as an <strong>inference</strong>). Score with the <a href="../../rubrics/standard-rubric.html">standard rubric</a> (groundedness, missing-information handling).</li>
+      </ol>
+      <p class="congrats">🏅 Congratulations! You grounded responses and handled missing evidence.</p>
+    </section>
+
+    <section class="lab-section" id="files">
+      <h2>📁 Files used in this lab</h2>
+      <p>Everything this lab runs on is a shared, editable file &mdash; no code required. The runner loads these by <code>--lab</code> and <code>--case</code>; edit any prompt file and all tracks (and the portal) pick up the change.</p>
+      <table class="content-table">
+        <thead><tr><th>File</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><a href="../../prompts/06-grounded-answer/baseline.manifest.yaml"><code>prompts/06-grounded-answer/baseline.manifest.yaml</code></a></td><td>Baseline prompt manifest (declares variables, test set, model settings)</td></tr>
+          <tr><td><a href="../../prompts/06-grounded-answer/user.html"><code>prompts/06-grounded-answer/user.md</code></a></td><td>Baseline user message</td></tr>
+          <tr><td><a href="../../datasets/triage/edge-cases.jsonl"><code>datasets/triage/edge-cases.jsonl</code></a></td><td>Test cases that fill the prompt placeholders</td></tr>
+          <tr><td><a href="../../datasets/triage/policy-context.html"><code>datasets/triage/policy-context.md</code></a></td><td>Synthetic grounding policy source</td></tr>
+          <tr><td><a href="../../prompts/06-grounded-answer/improved.manifest.yaml"><code>prompts/06-grounded-answer/improved.manifest.yaml</code></a></td><td>Improved prompt manifest (declares variables, test set, model settings)</td></tr>
+          <tr><td><a href="../../prompts/06-grounded-answer/system.html"><code>prompts/06-grounded-answer/system.md</code></a></td><td>Improved system instructions</td></tr>
+          <tr><td><a href="../../prompts/06-grounded-answer/improved-user.html"><code>prompts/06-grounded-answer/improved-user.md</code></a></td><td>Improved user message</td></tr>
+          <tr><td><a href="../../rubrics/standard-rubric.html"><code>rubrics/standard-rubric.md</code></a></td><td>Scoring rubric used to compare prompts</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="lab-section" id="checkpoint">
+      <h2>🏅 Checkpoint</h2>
+      <ul>
+        <li>The supported question is answered with policy evidence.</li>
+        <li>The unsupported question returns the exact fallback sentence.</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="reflection">
+      <h2>🤔 Test your understanding &amp; reflection</h2>
+      <ul>
+        <li>What did the fallback rule prevent on the unsupported question?</li>
+        <li>How did the improved prompt separate a fact from an inference?</li>
+      </ul>
+    </section>
+
+    <section class="lab-section" id="troubleshooting">
+      <h2>🧭 Troubleshooting</h2>
+      <ul>
+        <li>If the model still invents a number, confirm the grounding system prompt was applied and the policy is inside the <code>&lt;policy&gt;</code> delimiters.</li>
+        <li>Coding blocked? Use the <a href="../../labs/06-grounding-and-uncertainty/portal.html">Portal steps</a>. See <a href="../../docs/troubleshooting.html">troubleshooting</a>.</li>
+      </ul>
+      <p>Optional challenge: <a href="../../labs/06-grounding-and-uncertainty/challenge.html">challenge.md</a>.</p>
+    </section>
+
+    <nav class="lab-nav" aria-label="Lab navigation">
+      <a href="../05-prompt-chaining/index.html">
+        <span class="nav-label">←  Previous lab</span>
+        <span class="nav-title">Lab 05 — Prompt Chaining</span>
+      </a>
+      <a class="nav-next" href="../07-evaluation-and-injection/index.html">
+        <span class="nav-label">Next lab  →</span>
+        <span class="nav-title">Lab 07 — Evaluation &amp; Injection</span>
+      </a>
+    </nav>
+  </main>
+
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+id: triage-defensive
+version: 1.0.0
+lab: 07-evaluation-and-injection
+variant: improved
+purpose: Defensive triage prompt with explicit task boundary, delimiters, and refusal rules.
+system_prompt: system.md
+user_prompt: user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/adversarial-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 500
+  store: false
+known_limitations:
+  - Prompt-level defenses reduce but do not eliminate injection risk; app-level controls required.
+change_notes: >
+  v1.0.0 initial defensive prompt. Combines instruction/data separation, delimiters, explicit
+  task boundary, least-privilege scope, and refusal-to-disclose rules for Lab 07 testing.

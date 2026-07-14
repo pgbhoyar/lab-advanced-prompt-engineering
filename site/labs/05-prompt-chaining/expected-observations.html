@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 05 — Expected Observations · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 05 — Expected Observations
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-05-expected-observations">Lab 05 — Expected Observations</h1>
+<p>Judge by characteristics; responses vary.</p>
+<h2 id="single-prompt-typical-weaknesses">Single prompt — typical weaknesses</h2>
+<ul>
+<li>One or more of the four sub-tasks is thin, missing, or blended into another.</li>
+<li>On the long/noisy <code>edge-long-01</code>, irrelevant details (coffee machine, desk moves) may leak in.</li>
+<li>Hard to tell which step failed.</li>
+</ul>
+<h2 id="chain-expected-characteristics">Chain — expected characteristics</h2>
+<ul>
+<li><strong>Stage 1</strong> returns a clean JSON object of extracted facts; irrelevant noise is dropped.</li>
+<li>If Stage 1 output is not valid JSON, the chain <strong>stops</strong> and reports it (no garbage into Stage 2).</li>
+<li><strong>Stage 2</strong> classifies/recommends using only the validated facts.</li>
+<li>Each stage is independently inspectable and testable.</li>
+</ul>
+<h2 id="teaching-point">Teaching point</h2>
+<p>Decomposition improves observability and maintainability. The trade-off is more calls and more
+moving parts — worth it when reliability and traceability matter.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+id: triage-fewshot-zeroshot
+version: 1.0.0
+lab: 03-few-shot-prompting
+variant: baseline
+purpose: Zero-shot category classification with ambiguous category boundaries.
+system_prompt: system.md
+user_prompt: user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/edge-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 400
+  store: false
+known_limitations:
+  - Category boundaries (e.g. security vs software) are underspecified without examples.

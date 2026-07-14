@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 03 — Few-Shot Prompting · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 03 — Few-Shot Prompting
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-03-few-shot-prompting">Lab 03 — Few-Shot Prompting</h1>
+<p><strong>Last updated: Jul-14-2026</strong></p>
+<p>When instructions alone are ambiguous, a few <strong>representative examples</strong> can sharpen the model's
+decisions. You'll improve a tricky classification with a small, consistent example set.</p>
+<p><code>BEGINNER–INTERMEDIATE</code> · ⏱️ 10 MIN · 📂 FEW-SHOT PROMPTING</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Persona</th>
+<th>Duration</th>
+<th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Anyone (no coding required)</td>
+<td>10 minutes</td>
+<td>Compare zero-shot vs few-shot classification on a boundary case (a phishing link that should be <strong>security</strong>, not <strong>software</strong>) and see the pattern applied to new input.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">📋 Contents</h2>
+<ol>
+<li><a href="#-why-this-matters">Why this matters</a></li>
+<li><a href="#-scenario">Scenario</a></li>
+<li><a href="#-core-concepts">Core concepts</a></li>
+<li><a href="#-prerequisites">Prerequisites</a></li>
+<li><a href="#-what-youll-accomplish">What you'll accomplish</a></li>
+<li><a href="#-exercise-observe-zero-shot">Exercise: Observe zero-shot</a></li>
+<li><a href="#-exercise-add-few-shot-examples">Exercise: Add few-shot examples</a></li>
+<li><a href="#-test--evaluate">Test &amp; evaluate</a></li>
+<li><a href="#-checkpoint">Checkpoint</a></li>
+<li><a href="#-test-your-understanding--reflection">Test your understanding &amp; reflection</a></li>
+<li><a href="#-troubleshooting">Troubleshooting</a></li>
+<li><a href="#-optional-challenge">Optional challenge</a></li>
+<li><a href="#-summary">Summary</a></li>
+</ol>
+<h2 id="why-this-matters">🤔 Why this matters</h2>
+<p>Some boundaries are hard to describe in words but easy to show. Few-shot prompting is a widely
+applicable technique that produces an easily observable before-and-after — as long as the examples
+are accurate and consistent.</p>
+<h2 id="scenario">🌐 Scenario</h2>
+<p>Classify triage categories. The boundary between <strong>security</strong> and <strong>software</strong> is easy to get wrong
+without examples (a clicked phishing link looks like a "pop-up" problem).</p>
+<h2 id="core-concepts">🎓 Core concepts</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Zero-shot</strong></td>
+<td>Instructions only, no examples.</td>
+</tr>
+<tr>
+<td><strong>Few-shot</strong></td>
+<td>A handful of example input/output pairs that demonstrate the desired behavior.</td>
+</tr>
+<tr>
+<td><strong>Boundary case</strong></td>
+<td>An input near the line between two categories, where examples help most.</td>
+</tr>
+<tr>
+<td><strong>Consistency</strong></td>
+<td>Examples must be accurate and internally consistent — a wrong example teaches wrong behavior.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="prerequisites">✅ Prerequisites</h2>
+<ul>
+<li><strong>Lab 01</strong> completed.</li>
+<li>Your chosen track configured (Portal, Python, C#, or Java).</li>
+</ul>
+<h2 id="what-youll-accomplish">🎯 What you'll accomplish</h2>
+<ul>
+<li>Record a zero-shot classification and its rationale.</li>
+<li>Add representative, consistent examples covering multiple categories.</li>
+<li>Observe the few-shot prompt apply the demonstrated pattern to a new case.</li>
+</ul>
+<h2 id="exercise-observe-zero-shot">🚀 Exercise: Observe zero-shot</h2>
+<p><strong>Summary of tasks:</strong> run the zero-shot prompt on <code>few-shot-boundary-01</code> (a clicked phishing link)
+and record the category.</p>
+<h3 id="step-by-step-instructions">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>baseline</strong> (zero-shot) variant:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td><code>python -m workshop_runner run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>C#</td>
+<td><code>dotnet run --project apps/csharp/src/WorkshopRunner -- run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant baseline</code></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>./mvnw -q exec:java -Dexec.args="run --lab 03-few-shot-prompting --case few-shot-boundary-01 --variant baseline"</code></td>
+</tr>
+<tr>
+<td>Portal</td>
+<td>See <a href="portal.html">portal.md</a></td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>Zero-shot may mislabel it as <strong>software</strong>. Record the category and reason.</li>
+</ol>
+<h2 id="exercise-add-few-shot-examples">🔧 Exercise: Add few-shot examples</h2>
+<p><strong>Summary of tasks:</strong> run the few-shot variant, which adds three consistent examples including a
+boundary example mapping a phishing link to <strong>security</strong>.</p>
+<h3 id="step-by-step-instructions_1">Step-by-step instructions</h3>
+<ol>
+<li>Run the <strong>improved</strong> (few-shot) variant on the same case (swap to <code>--variant improved</code>).</li>
+<li>Confirm it now classifies the boundary case as <strong>security</strong> and applies the pattern rather than
+   copying an example verbatim.</li>
+</ol>
+<p>🏅 <strong>Congratulations!</strong> You improved an ambiguous classification with few-shot examples.</p>
+<h2 id="test-evaluate">🧮 Test &amp; evaluate</h2>
+<p>Run both on <code>few-shot-boundary-01</code>. Optionally add <code>irrelevant-01</code> (should stay out of scope) to
+confirm the examples don't cause over-triage. Score with the
+<a href="../../rubrics/standard-rubric.html">standard rubric</a>, focusing on <strong>task correctness</strong>.</p>
+<h2 id="checkpoint">🏅 Checkpoint</h2>
+<ul>
+<li>[ ] You ran zero-shot and few-shot on the same case.</li>
+<li>[ ] The few-shot variant applied the demonstrated pattern (not a copied example).</li>
+</ul>
+<h2 id="test-your-understanding-reflection">🤔 Test your understanding &amp; reflection</h2>
+<ol>
+<li>Did the model copy an example literally, or apply the pattern to new input?</li>
+<li>What would happen if one example were inconsistent or wrong?</li>
+</ol>
+<h2 id="troubleshooting">🧭 Troubleshooting</h2>
+<ul>
+<li>If few-shot performs worse, check the examples are accurate and consistent — a bad example
+  teaches bad behavior.</li>
+<li>Coding blocked? Use <a href="portal.html">portal.md</a>. See
+  <a href="../../docs/troubleshooting.html">../../docs/troubleshooting.md</a>.</li>
+</ul>
+<h2 id="optional-challenge">🏆 Optional challenge</h2>
+<p>See <a href="challenge.html">challenge.md</a>. Optional.</p>
+<h2 id="summary">📖 Summary</h2>
+<p>You used a small, consistent example set to sharpen an ambiguous decision. <strong>Lab 04</strong> locks the
+response into a strict, machine-readable structure.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

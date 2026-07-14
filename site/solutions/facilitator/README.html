@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facilitator Solutions · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Facilitator Solutions
+    </nav>
+    <section class="lab-section">
+<h1 id="facilitator-solutions">Facilitator Solutions</h1>
+<p><strong>Do not distribute to attendees before they attempt the labs.</strong> These solutions live in a
+separate directory to avoid accidental disclosure (FR-126).</p>
+<h2 id="reference-prompts">Reference prompts</h2>
+<p>The canonical "improved"/"reference" prompt for each lab already lives under <code>prompts/</code> as the
+source of truth. Facilitators can demonstrate them directly:</p>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Reference prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td><code>prompts/01-explicit-contract/improved.manifest.yaml</code></td>
+</tr>
+<tr>
+<td>02</td>
+<td><code>prompts/02-instruction-hierarchy/improved.manifest.yaml</code></td>
+</tr>
+<tr>
+<td>03</td>
+<td><code>prompts/03-few-shot/fewshot.manifest.yaml</code></td>
+</tr>
+<tr>
+<td>04</td>
+<td><code>prompts/04-structured-output/improved.manifest.yaml</code></td>
+</tr>
+<tr>
+<td>05</td>
+<td><code>prompts/05-prompt-chain/stage*.manifest.yaml</code></td>
+</tr>
+<tr>
+<td>06</td>
+<td><code>prompts/06-grounded-answer/improved.manifest.yaml</code></td>
+</tr>
+<tr>
+<td>07</td>
+<td><code>prompts/07-defensive-prompt/defensive.manifest.yaml</code></td>
+</tr>
+<tr>
+<td>08</td>
+<td><code>prompts/08-capstone-reference/reference.manifest.yaml</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="capstone-reference">Capstone reference</h2>
+<p><code>prompts/08-capstone-reference/</code> is a complete, passing capstone. Use it to show a model answer
+after attendees have attempted their own. It combines explicit contract, instruction/data
+separation, strict structured output, grounding + fallback, and injection-resistant scope rules.</p>
+<h2 id="expected-deterministic-outcomes">Expected deterministic outcomes</h2>
+<p>See <code>evaluation/expected-observations/README.md</code> and <code>evaluation/sample-results/</code>.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

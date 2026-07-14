@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop Datasets · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> / Workshop Datasets
+    </nav>
+    <section class="lab-section">
+<h1 id="workshop-datasets">Workshop Datasets</h1>
+<p>All data in this directory is <strong>synthetic</strong> and created for teaching. It contains no real
+customer, employee, or company information, and no personally identifiable information.</p>
+<h2 id="files">Files</h2>
+<ul>
+<li><code>policy-context.md</code> — a fictional IT service policy used as the authoritative grounding source
+  (Lab 06).</li>
+<li><code>starter-cases.jsonl</code> — one normal request for Lab 00.</li>
+<li><code>core-test-cases.jsonl</code> — the five core scenario types (normal, ambiguous, missing-information,
+  edge, conflicting) used across Labs 01–07.</li>
+<li><code>edge-cases.jsonl</code> — additional edge, irrelevant, and grounding cases.</li>
+<li><code>adversarial-cases.jsonl</code> — benign, synthetic prompt-injection and out-of-scope cases (Labs 02, 07).</li>
+</ul>
+<h2 id="format">Format</h2>
+<p>Each <code>.jsonl</code> file has one JSON object per line conforming to
+<a href="../schemas/test-case.schema.json"><code>schemas/test-case.schema.json</code></a>. Validate with:</p>
+<pre><code>python scripts/validate-schemas.py
+</code></pre>
+<h2 id="safety">Safety</h2>
+<p>Do not add real data. Do not add harmful prompt-injection payloads — injection examples must
+remain benign and demonstrate defensive behavior only.</p>
+    </section>
+  </main>
+  <script src="../assets/site.js"></script>
+</body>
+</html>

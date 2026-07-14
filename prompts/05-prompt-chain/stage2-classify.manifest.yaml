@@ -1,0 +1,15 @@
+id: triage-chain-s2-classify
+version: 1.0.0
+lab: 05-prompt-chaining
+variant: stage
+purpose: "Stage 2 of 2 — classify and recommend from validated extracted facts."
+system_prompt: stage2-system.md
+user_prompt: stage2-user.md
+variables:
+  - previous_output
+model:
+  reasoning_effort: low
+  max_output_tokens: 400
+  store: false
+known_limitations:
+  - Runs only after stage 1 output is validated as JSON.

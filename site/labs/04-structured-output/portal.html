@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 04 — Portal Instructions · Advanced Prompt Engineering</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/styles.css">
+</head>
+<body>
+  <nav class="topbar" aria-label="Primary">
+    <div class="topbar-left">
+      <a href="../../index.html">Advanced Prompt Engineering Labs</a>
+    </div>
+    <div class="topbar-right">
+      <button type="button" class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+    </div>
+  </nav>
+  <main class="lab-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> / Lab 04 — Portal Instructions
+    </nav>
+    <section class="lab-section">
+<h1 id="lab-04-portal-instructions">Lab 04 — Portal Instructions</h1>
+<h2 id="baseline-loose-json">Baseline (loose JSON)</h2>
+<ol>
+<li>System instructions: <code>Triage the request and reply in JSON with the summary, category,
+   urgency, and what to do next.</code></li>
+<li>User message:</li>
+</ol>
+<pre><code>Request ID: SR-1001
+Service request:
+My work laptop is about 5 years old and the battery now lasts only 20 minutes. I have to stay
+plugged in all day. Can I get a replacement? - Priya, Finance
+</code></pre>
+<ol start="3">
+<li>Run. Note any prose around the JSON, wrong field names, or invalid values.</li>
+</ol>
+<h2 id="improved-strict-schema">Improved (strict schema)</h2>
+<ol>
+<li>If the portal exposes a <strong>structured output / JSON schema</strong> option, enable it and paste the
+   contents of <a href="../../schemas/triage-output.schema.json"><code>schemas/triage-output.schema.json</code></a>.
+   If it does not, paste <code>prompts/04-structured-output/strict-system.md</code> into system instructions
+   (it describes the exact contract).</li>
+<li>Use the <strong>same</strong> user message.</li>
+<li>Run once.</li>
+</ol>
+<h2 id="validate-manual-checklist">Validate (manual checklist)</h2>
+<p>Work through <a href="../../rubrics/structured-output-checklist.html"><code>rubrics/structured-output-checklist.md</code></a>.
+The response is a <strong>PASS</strong> only if every box is checked (single JSON object, all nine fields,
+valid enums, arrays for the list fields, no extra keys, no secrets).</p>
+<h2 id="fallback">Fallback</h2>
+<p>Switched tracks? Restart here with the same prompt and input.</p>
+    </section>
+  </main>
+  <script src="../../assets/site.js"></script>
+</body>
+</html>

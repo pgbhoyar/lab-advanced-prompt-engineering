@@ -1,0 +1,16 @@
+id: triage-chain-single
+version: 1.0.0
+lab: 05-prompt-chaining
+variant: baseline
+purpose: Single multi-purpose prompt that classifies, summarizes, recommends, and drafts at once.
+system_prompt: system.md
+user_prompt: user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/core-test-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 900
+  store: false
+known_limitations:
+  - Doing everything in one call makes it hard to see or validate intermediate steps.

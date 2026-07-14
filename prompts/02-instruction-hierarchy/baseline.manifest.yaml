@@ -1,0 +1,15 @@
+id: triage-hierarchy-baseline
+version: 1.0.0
+lab: 02-instruction-hierarchy
+variant: baseline
+purpose: Baseline that mixes instructions and untrusted request text with no separation.
+user_prompt: user.md
+variables:
+  - request_text
+test_set: ../../datasets/triage/adversarial-cases.jsonl
+model:
+  reasoning_effort: low
+  max_output_tokens: 800
+  store: false
+known_limitations:
+  - No separation between instructions and untrusted content; vulnerable to embedded instructions.
