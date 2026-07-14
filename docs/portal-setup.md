@@ -4,7 +4,8 @@ The portal track requires **no local software** — only a browser and the works
 
 ## 1. Sign in
 
-1. Open the Microsoft Foundry portal in a current desktop browser.
+1. Open the Microsoft Foundry portal at **[https://ai.azure.com/](https://ai.azure.com/)** in a
+   current desktop browser.
 2. Sign in with the account provided for the workshop.
 
 ## 2. Open the project and deployment
